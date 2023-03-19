@@ -1,12 +1,16 @@
-import logo from './logo.svg';
 import './App.css';
-import PostList from "./PostList";
+import { BrowserRouter, Route, Link, Routes } from "react-router-dom";
+import Home from "./components/page/Home";
+import Submit from "./components/page/Submit";
 
 function App() {
   return (
-    <div className="App">
-      <PostList/>
-    </div>
+    <BrowserRouter>
+        <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/submit" element={<Submit />} />
+        </Routes>
+    </BrowserRouter>
   );
 }
 
