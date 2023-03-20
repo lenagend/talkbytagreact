@@ -2,10 +2,12 @@ import React from 'react';
 import PostList from './PostList';
 import HomeSubmit from "./HomeSubmit";
 import RightSidebar from "./RightSidebar";
-import SubmitSubmit from "./SubmitSubmit";
+import PostSubmit from "./PostSubmit";
+import {useState} from 'react';
 
 
-function Container( { page} ){
+function Container( { page, post} ){
+
     if (page === 'home'){
         return (
             <main>
@@ -28,7 +30,7 @@ function Container( { page} ){
                 <div className="container">
                     <div className="row g-4">
                         <div className="col-md-8 col-lg-6 vstack gap-4">
-                            <SubmitSubmit />
+                            <PostSubmit post={post ? post : null}/>
                         </div>
                     </div>
                 </div>

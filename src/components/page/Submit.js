@@ -1,16 +1,20 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Header from "../header/Header";
 import Container from "../body/Container";
+import { useLocation } from 'react-router-dom';
 
-class Home extends React.Component {
-    render() {
-        return (
-            <div className="App">
-                <Header />
-                <Container page="submit" />
-            </div>
-        );
-    }
+
+function Submit() {
+    const location = useLocation();
+    const [post, setPost] = useState(location.state?.post || null);
+
+    return (
+        <div className="App">
+            <Header />
+            <Container page="submit" post={post ? post : null}/>
+        </div>
+    );
+
 }
 
-export default Home;
+export default Submit;

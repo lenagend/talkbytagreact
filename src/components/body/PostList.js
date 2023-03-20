@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import {API_BASE_URL} from "../../config/config";
+import {API_BASE_URL, LIMIT, OFFSET} from "../../config/config";
+
 
 const PostList = () => {
     const [posts, setPosts] = useState([]);
@@ -8,8 +10,8 @@ const PostList = () => {
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-                const offset = 0;
-                const limit = 10;
+                const offset = `${OFFSET}`;
+                const limit = `${LIMIT}`;
                 const response = await axios.get(`${API_BASE_URL}/api/posts?offset=${offset}&limit=${limit}`);
                 setPosts(response.data);
             } catch (error) {
@@ -19,6 +21,12 @@ const PostList = () => {
 
         fetchPosts();
     }, []);
+
+    const navigate = useNavigate();
+
+    function handleEdit(post){
+        navigate('/submit', {state : {post}});
+    }
 
     return (
         <div>
@@ -48,11 +56,9 @@ const PostList = () => {
                         </div>
                         {/* Card feed action dropdown START */}
                         <div>
-                            <form method="delete" action={`delete/${post.id}`}>
-                                <button type="submit" className="btn btn-danger-soft">
-                                    삭제하기
+                                <button type="submit" className="btn btn-danger-soft" onClick={() => handleEdit(post)}>
+                                    수정/삭제
                                 </button>
-                            </form>
                         </div>
                         {/* Card feed action dropdown END */}
                     </div>
