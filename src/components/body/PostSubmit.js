@@ -37,10 +37,11 @@ function PostSubmit( {post} ) {
                                 initialValue={post ? post.contents : ''}
                                 init={{ width : "100%",
                             height : 600,
-                            branding : false,
-                            forced_root_block : false,
+                            plugins: 'image imagetools', // 이미지 관련 플러그인 추가
+                            toolbar: 'image', // 툴바에 이미지 아이콘 추가
                             menubar : false,
                             automatic_uploads: true,
+                            images_reuse_filename: true,
                             images_upload_url: `${API_BASE_URL}/api/posts/upload-image`,
                             images_upload_handler: async (blobInfo, success, failure) => {
                                 const formData = new FormData();
@@ -56,7 +57,8 @@ function PostSubmit( {post} ) {
                                 } catch (error) {
                                     failure('Failed to upload image');
                                 }
-                            },}}
+                            },
+                                }}
                         onEditorChange={(newContent) => setContents(newContent)}/>
                     </div>
                     <ul className="nav nav-pills nav-stack small fw-normal">
