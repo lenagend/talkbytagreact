@@ -51,7 +51,7 @@ const PostList = () => {
                                     </h6>
                                     <span className="nav-item small">{new Date(post.createdAt).toLocaleString()}</span>
                                 </div>
-                                <p className="mb-0 small">{post.authorId}</p>
+                                <p className="mb-0 small" style={{textAlign: 'left'}}>작성자</p>
                             </div>
                         </div>
                         {/* Card feed action dropdown START */}

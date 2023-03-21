@@ -7,20 +7,48 @@ import {useNavigate} from "react-router-dom";
 
 function PostSubmit( {post} ) {
     const [contents, setContents] = useState('');
+    const [hashTag, setHashTag] = useState('');
     const navigate = useNavigate();
+
+
+    const handleEditorChange = (contents) => {
+        setContents(contents);
+
+        // 해시태그를 찾기 위한 정규식
+        const hashTagRegex = /(#[\wㄱ-ㅎㅏ-ㅣ가-힣]+)/g;
+
+        // 해시태그를 포함한 HTML을 텍스트로 변환
+        const parser = new DOMParser();
+        const parsedHtml = parser.parseFromString(contents, 'text/html');
+        const textContent = parsedHtml.body.textContent;
+        // 텍스트에서 해시태그를 찾음
+        const inputHashTags = textContent.match(hashTagRegex);
+
+        if (inputHashTags) {
+            let modifiedContents = contents;
+            inputHashTags.forEach((tag) => {
+                const tagWithBlueFont = `<span style="color:#008EE2; font-weight: bold">${tag}</span>`;
+                modifiedContents = modifiedContents.replace(tag, tagWithBlueFont);
+            });
+            setContents(modifiedContents);
+            setHashTag(inputHashTags.join(' '));
+        }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        const updatedHashTag = hashTag || "#freeTalk";
+
         if(!post){
-            axios.post(`${API_BASE_URL}/api/posts`, { contents })
+            axios.post(`${API_BASE_URL}/api/posts`, { contents: contents, hashTag : updatedHashTag })
                 .then(() => {
                     navigate('/');
                 })
                 .catch((err) => console.log(err));
         }else{
             const publishedValue = e.target.name === "delete" ? false : true;
-            axios.put(`${API_BASE_URL}/api/posts/${post.id}`, {contents : contents,  published: publishedValue})
+            axios.put(`${API_BASE_URL}/api/posts/${post.id}`, {contents : contents,  published: publishedValue, hashTag: updatedHashTag})
                 .then(() => {
                     navigate('/');
                 })
@@ -37,29 +65,11 @@ function PostSubmit( {post} ) {
                                 initialValue={post ? post.contents : ''}
                                 init={{ width : "100%",
                             height : 600,
-                            plugins: 'image imagetools', // 이미지 관련 플러그인 추가
-                            toolbar: 'image', // 툴바에 이미지 아이콘 추가
                             menubar : false,
                             automatic_uploads: true,
-                            images_reuse_filename: true,
-                            images_upload_url: `${API_BASE_URL}/api/posts/upload-image`,
-                            images_upload_handler: async (blobInfo, success, failure) => {
-                                const formData = new FormData();
-                                formData.append('file', blobInfo.blob(), blobInfo.filename());
 
-                                try {
-                                    const response = await axios.post(`${API_BASE_URL}/api/posts/upload-image`, formData, {
-                                        headers: { 'Content-Type': 'multipart/form-data' },
-                                    });
-                                    const imageLocation = `${API_BASE_URL}${response.data.location}`;
-                                    console.log(imageLocation);
-                                    success(imageLocation);
-                                } catch (error) {
-                                    failure('Failed to upload image');
-                                }
-                            },
                                 }}
-                        onEditorChange={(newContent) => setContents(newContent)}/>
+                        onEditorChange={handleEditorChange}/>
                     </div>
                     <ul className="nav nav-pills nav-stack small fw-normal">
                         <li className="nav-item ms-lg-auto">

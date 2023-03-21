@@ -4,6 +4,7 @@ import HomeSubmit from "./HomeSubmit";
 import RightSidebar from "./RightSidebar";
 import PostSubmit from "./PostSubmit";
 import {useState} from 'react';
+import PostNotice from "./PostNotice";
 
 
 function Container( { page, post} ){
@@ -31,6 +32,9 @@ function Container( { page, post} ){
                     <div className="row g-4">
                         <div className="col-md-8 col-lg-6 vstack gap-4">
                             <PostSubmit post={post ? post : null}/>
+                        </div>
+                        <div className="col-lg-3">
+                            <PostNotice />
                         </div>
                     </div>
                 </div>
