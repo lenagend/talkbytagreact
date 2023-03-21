@@ -15,7 +15,7 @@ function PostSubmit( {post} ) {
         setContents(contents);
 
         // 해시태그를 찾기 위한 정규식
-        const hashTagRegex = /(#[\wㄱ-ㅎㅏ-ㅣ가-힣]+)/g;
+        const hashTagRegex = /(@[\wㄱ-ㅎㅏ-ㅣ가-힣]+)/g;
 
         // 해시태그를 포함한 HTML을 텍스트로 변환
         const parser = new DOMParser();
@@ -38,7 +38,7 @@ function PostSubmit( {post} ) {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const updatedHashTag = hashTag || "#freeTalk";
+        const updatedHashTag = hashTag || "@freeTalk";
 
         if(!post){
             axios.post(`${API_BASE_URL}/api/posts`, { contents: contents, hashTag : updatedHashTag })
@@ -66,7 +66,6 @@ function PostSubmit( {post} ) {
                                 init={{ width : "100%",
                             height : 600,
                             menubar : false,
-                            automatic_uploads: true,
 
                                 }}
                         onEditorChange={handleEditorChange}/>

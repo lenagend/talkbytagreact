@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import {API_BASE_URL, LIMIT, OFFSET} from "../../config/config";
 
@@ -28,6 +28,7 @@ const PostList = () => {
         navigate('/submit', {state : {post}});
     }
 
+
     return (
         <div>
             {posts.map((post) => (
@@ -51,35 +52,24 @@ const PostList = () => {
                                     </h6>
                                     <span className="nav-item small">{new Date(post.createdAt).toLocaleString()}</span>
                                 </div>
-                                <p className="mb-0 small" style={{textAlign: 'left'}}>작성자</p>
+                                <p className="mb-0 small" style={{textAlign: 'left'}}>{post.authorId}</p>
                             </div>
                         </div>
-                        {/* Card feed action dropdown START */}
                         <div>
-                                <button type="submit" className="btn btn-danger-soft" onClick={() => handleEdit(post)}>
-                                    수정/삭제
-                                </button>
+                            <button type="submit" className="btn btn-danger-soft" onClick={() => handleEdit(post)}>
+                                수정/삭제
+                            </button>
                         </div>
-                        {/* Card feed action dropdown END */}
                     </div>
                     {/* Card header END */}
                     {/* Card body START */}
                     <div className="card-body">
+                        <Link to={`/read/${post.id}`}>
                         <p dangerouslySetInnerHTML={{ __html: post.contents }}></p>
-                        {/* Card img */}
-                        {/* Feed react START */}
+                        </Link>
                         <ul className="nav nav-stack py-3 small">
                             <li className="nav-item">
-                                <a
-                                    className="nav-link active"
-                                    href="#!"
-                                    data-bs-container="body"
-                                    data-bs-toggle="tooltip"
-                                    data-bs-placement="top"
-                                    data-bs-html="true"
-                                    data-bs-custom-class="tooltip-text-start"
-                                    data-bs-title="Frances Guerrero<br> Lori Stevens<br> Billy Vasquez<br> Judy Nguyen<br> Larry Lawson<br> Amanda Reed<br> Louis Crawford"
-                                >
+                                <a className="nav-link active"  href="#!" >
                                     <i className="bi bi-hand-thumbs-up-fill pe-1"></i>Liked (<span>{post.viewCount}</span>)
                                 </a>
                             </li>
@@ -88,46 +78,7 @@ const PostList = () => {
                                     <i className="bi bi-chat-fill pe-1"></i>Comments (<span>10</span>)
                                 </a>
                             </li>
-                            {/* Card share action START */}
-                            <li className="nav-item dropdown ms-sm-auto">
-                                <a className="nav-link mb-0" href="#" id="cardShareAction" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i className="bi bi-reply-fill flip-horizontal ps-1"></i>Share
-                                </a>
-                                {/* Card share action dropdown menu */}
-                                <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="cardShareAction">
-                                    <li>
-                                        <a className="dropdown-item" href="#">
-                                            <i className="bi bi-envelope fa-fw pe-2"></i>Send via Direct Message
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a className="dropdown-item" href="#">
-                                            <i className="bi bi-bookmark-check fa-fw pe-2"></i>Bookmark{' '}
-                                        </a>
-                                    </li>
-                                    <li>
-                                    <a className="dropdown-item" href="#">
-                                        <i className="bi bi-link fa-fw pe-2"></i>Copy link to post
-                                    </a>
-                            </li>
-                            <li>
-                                <a className="dropdown-item" href="#">
-                                    <i className="bi bi-share fa-fw pe-2"></i>Share post via …
-                                </a>
-                            </li>
-                            <li>
-                                <hr className="dropdown-divider" />
-                            </li>
-                            <li>
-                                <a className="dropdown-item" href="#">
-                                    <i className="bi bi-pencil-square fa-fw pe-2"></i>Share to News Feed
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    {/* Card share action END */}
                 </ul>
-            {/* Feed react END */}
                 </div>
             {/* Card body END */}
                 </div>

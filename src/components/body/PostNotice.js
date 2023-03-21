@@ -11,11 +11,11 @@ class PostNotice extends React.Component {
                             </div>
                             <div className="card-body">
                                 <div className="mb-3">
-                                    <h6 className="mb-0"><a href="blog-details.html">본문중 #으로 시작하는 단어는 해시태그가 됩니다. </a></h6>
+                                    <h6 className="mb-0"><a href="blog-details.html">본문중 @으로 시작하는 단어는 해시태그가 됩니다. </a></h6>
                                     <small>&middot;</small>
                                 </div>
                                 <div className="mb-3">
-                                    <h6 className="mb-0"><a href="blog-details.html">해시태그가 없을시 #FreeTalk가 해시태그가 됩니다.</a></h6>
+                                    <h6 className="mb-0"><a href="blog-details.html">해시태그가 없을시 @FreeTalk가 해시태그가 됩니다.</a></h6>
                                     <small>&middot;</small>
                                 </div>
                                 <div className="mb-3">
