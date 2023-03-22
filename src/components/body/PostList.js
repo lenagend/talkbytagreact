@@ -13,7 +13,25 @@ const PostList = () => {
                 const offset = `${OFFSET}`;
                 const limit = `${LIMIT}`;
                 const response = await axios.get(`${API_BASE_URL}/api/posts?offset=${offset}&limit=${limit}`);
-                setPosts(response.data);
+                const postsData = response.data;
+
+                const fetchCommentCounts = async () => {
+                    const commentCountPromises = postsData.map(async (post) => {
+                        const commentResponse = await axios.get(`${API_BASE_URL}/api/comments/count/${post.id}`);
+                        return commentResponse.data;
+                    });
+
+                    const commentCounts = await Promise.all(commentCountPromises);
+                    return commentCounts
+                }
+
+                const commentCounts = await fetchCommentCounts();
+
+                const postsWithCommentCounts = postsData.map((post, index) => {
+                    return { ...post, commentCount: commentCounts[index] };
+                });
+
+                setPosts(postsWithCommentCounts);
             } catch (error) {
                 console.error('Error fetching posts:', error);
             }
@@ -75,7 +93,7 @@ const PostList = () => {
                             </li>
                             <li className="nav-item">
                                 <a className="nav-link" href="#!">
-                                    <i className="bi bi-chat-fill pe-1"></i>Comments (<span>10</span>)
+                                    <i className="bi bi-chat-fill pe-1"></i>Comments (<span>{post.commentCount}</span>)
                                 </a>
                             </li>
                 </ul>

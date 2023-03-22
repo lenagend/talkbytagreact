@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, Link, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import {API_BASE_URL} from "../../config/config";
+import Comments from "./Comments";
 
 
 const PostRead = () => {
     const { id } = useParams();
 
     const [post, setPost] = useState([]);
+    const [commentCounts, setCommentCounts] = useState(0)
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -17,10 +19,20 @@ const PostRead = () => {
             } catch (error) {
                 console.error('Error fetching post:', error);
             }
-        }; 
+        };
+
+        const fetchCommentCounts = async () => {
+            try{
+                const response = await axios.get(`${API_BASE_URL}/api/comments/count/${id}`);
+                setCommentCounts(response.data);
+            }catch (error){
+                console.error('Error fetching commentCount:', error);
+            }
+        }
 
         fetchPosts();
-    }, []);
+        fetchCommentCounts();
+    }, [id]);
 
     const navigate = useNavigate();
 
@@ -62,9 +74,7 @@ const PostRead = () => {
                 {/* Card header END */}
                 {/* Card body START */}
                 <div className="card-body">
-                    <Link to="/read">
                     <p dangerouslySetInnerHTML={{ __html: post.contents }}></p>
-                    </Link>
                     <ul className="nav nav-stack py-3 small">
                         <li className="nav-item">
                             <a className="nav-link active"  href="#!" >
@@ -73,10 +83,13 @@ const PostRead = () => {
                         </li>
                         <li className="nav-item">
                             <a className="nav-link" href="#!">
-                                <i className="bi bi-chat-fill pe-1"></i>Comments (<span>10</span>)
+                                <i className="bi bi-chat-fill pe-1"></i>Comments (<span>{commentCounts}</span>)
                             </a>
                         </li>
                      </ul>
+                    {/*Comment Start*/}
+                    <Comments postId={post.id}/>
+                    {/*Comment End*/}
                 </div>
         {/* Card body END */}
             </div>
