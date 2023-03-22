@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import {API_BASE_URL} from "../../config/config";
-import Comments from "./Comments";
+import CommentContainer from "./CommentContainer";
 
 
 const PostRead = () => {
@@ -88,7 +88,7 @@ const PostRead = () => {
                         </li>
                      </ul>
                     {/*Comment Start*/}
-                    <Comments postId={post.id}/>
+                    <CommentContainer postId={post.id}/>
                     {/*Comment End*/}
                 </div>
         {/* Card body END */}
