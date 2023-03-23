@@ -3,7 +3,7 @@ import {API_BASE_URL, LIMIT, OFFSET} from "../../config/config";
 import axios from "axios";
 import Comment from "./Comment";
 
-const CommentContainer = ({postId}) => {
+const CommentContainer = ({postId, setCommentCounts}) => {
     const [contents, setContents] = useState('');
     const [comments, setComments] = useState([]);
 
@@ -33,6 +33,7 @@ const CommentContainer = ({postId}) => {
         try {
             const response = await axios.post(`${API_BASE_URL}/api/comments`, { contents: contents, postId: postId });
             console.log('Comment posted:', response.data);
+            setCommentCounts();
             fetchComments();
             setContents('');
         } catch (error) {
@@ -63,7 +64,7 @@ const CommentContainer = ({postId}) => {
             {/*Comment List*/}
             <ul className="comment-wrap list-unstyled">
                 {comments.map((comment) => (
-                    <Comment key={comment.id} comment={comment}/>
+                    <Comment key={comment.id} comment={comment} setCommentCounts={setCommentCounts}/>
                 ))}
             </ul>
             {/*Comment List*/}

@@ -7,7 +7,7 @@ import CommentContainer from "./CommentContainer";
 
 const PostRead = () => {
     const { id } = useParams();
-
+    const navigate = useNavigate();
     const [post, setPost] = useState([]);
     const [commentCounts, setCommentCounts] = useState(0)
 
@@ -21,20 +21,19 @@ const PostRead = () => {
             }
         };
 
-        const fetchCommentCounts = async () => {
-            try{
-                const response = await axios.get(`${API_BASE_URL}/api/comments/count/${id}`);
-                setCommentCounts(response.data);
-            }catch (error){
-                console.error('Error fetching commentCount:', error);
-            }
-        }
-
         fetchPosts();
         fetchCommentCounts();
     }, [id]);
 
-    const navigate = useNavigate();
+    const fetchCommentCounts = async () => {
+        try{
+            const response = await axios.get(`${API_BASE_URL}/api/comments/count/${id}`);
+            setCommentCounts(response.data);
+        }catch (error){
+            console.error('Error fetching commentCount:', error);
+        }
+    }
+
 
     function handleEdit(post){
         navigate('/submit', {state : {post}});
@@ -88,7 +87,7 @@ const PostRead = () => {
                         </li>
                      </ul>
                     {/*Comment Start*/}
-                    <CommentContainer postId={post.id}/>
+                    <CommentContainer postId={post.id} setCommentCounts={fetchCommentCounts}/>
                     {/*Comment End*/}
                 </div>
         {/* Card body END */}
