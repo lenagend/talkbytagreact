@@ -22,16 +22,15 @@ function Container( { page, post} ){
                 return <PostSubmit post={post ? post : null} />;
             case 'read':
                 return <PostRead />;
+            case 'search':
+                return (
+                    <>
+                        <HomeSubmit />
+                        <PostList />
+                    </>
+                );
             default:
                 return null;
-        }
-    };
-
-    const renderRightSidebar = () => {
-        if (page === 'home') {
-            return <RightSidebar />;
-        } else {
-            return <PostNotice />;
         }
     };
 
@@ -40,7 +39,7 @@ function Container( { page, post} ){
             <div className="container">
                 <div className="row g-4">
                     <div className="col-md-8 col-lg-6 vstack gap-4">{renderContent()}</div>
-                    <div className="col-lg-3">{renderRightSidebar()}</div>
+                    <div className="col-lg-3"><RightSidebar /></div>
                 </div>
             </div>
         </main>
