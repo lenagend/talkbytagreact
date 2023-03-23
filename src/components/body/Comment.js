@@ -52,7 +52,7 @@ const Comment = ({ comment, setCommentCounts }) => {
         <li className="comment-item">
             <div className="d-flex position-relative">
                 <div className="avatar avatar-xs">
-                    <a href="#!"><img className="avatar-img rounded-circle" src="assets/images/avatar/05.jpg"
+                    <a href="#!"><img className="avatar-img rounded-circle" src="/assets/images/avatar/05.jpg"
                                       alt=""/></a>
                 </div>
                 <div className="ms-2">
@@ -77,7 +77,7 @@ const Comment = ({ comment, setCommentCounts }) => {
             {showReplyForm && (
             <div class="d-flex mb-3">
                 <div className="avatar avatar-xs me-2">
-                    <a href="#!"> <img className="avatar-img rounded-circle" src="assets/images/avatar/12.jpg" alt=""/> </a>
+                    <a href="#!"> <img className="avatar-img rounded-circle" src="/assets/images/avatar/12.jpg" alt=""/> </a>
                 </div>
                 <form className="nav nav-item w-100 position-relative" onSubmit={handleSubmit}>
                 <textarea data-autoresize className="form-control pe-5 bg-light" rows="1" id="contents" name="contents" value={contents}

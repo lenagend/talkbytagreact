@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import {API_BASE_URL} from "../../config/config";
 import CommentContainer from "./CommentContainer";
@@ -8,22 +8,24 @@ import CommentContainer from "./CommentContainer";
 const PostRead = () => {
     const { id } = useParams();
     const navigate = useNavigate();
+    const location = useLocation();
+
     const [post, setPost] = useState([]);
     const [commentCounts, setCommentCounts] = useState(0)
 
     useEffect(() => {
-        const fetchPosts = async () => {
-            try {
-                const response = await axios.get(`${API_BASE_URL}/api/posts/read/${id}`);
-                setPost(response.data);
-            } catch (error) {
-                console.error('Error fetching post:', error);
-            }
-        };
-
         fetchPosts();
         fetchCommentCounts();
     }, [id]);
+
+    const fetchPosts = async () => {
+        try {
+            const response = await axios.get(`${API_BASE_URL}/api/posts/read/${id}`);
+            setPost(response.data);
+        } catch (error) {
+            console.error('Error fetching post:', error);
+        }
+    };
 
     const fetchCommentCounts = async () => {
         try{
@@ -48,7 +50,7 @@ const PostRead = () => {
                         {/* Avatar */}
                         <div className="avatar avatar-story me-2">
                             <a href="#!">
-                                <img className="avatar-img rounded-circle" src="assets/images/avatar/04.jpg" alt="" />
+                                <img className="avatar-img rounded-circle" src="/assets/images/avatar/04.jpg" alt="" />
                             </a>
                         </div>
                         {/* Info */}

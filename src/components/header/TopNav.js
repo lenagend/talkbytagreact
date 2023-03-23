@@ -7,9 +7,9 @@ class TopNav extends React.Component {
             <nav className="navbar navbar-expand-lg">
                 <div className="container">
                     {/*Logo Starg*/}
-                    <a className="navbar-brand" href="index.html">
-                        <img className="light-mode-item navbar-brand-item" src="assets/images/logo.svg" alt="logo"/>
-                        <img className="dark-mode-item navbar-brand-item" src="assets/images/logo.svg" alt="logo"/>
+                    <a className="navbar-brand" href="/">
+                        <img className="light-mode-item navbar-brand-item" src="/assets/images/logo.svg" alt="logo"/>
+                        <img className="dark-mode-item navbar-brand-item" src="/assets/images/logo.svg" alt="logo"/>
                     </a>
                     {/*Logo End*/}
 

@@ -37,7 +37,6 @@
     <link rel="stylesheet" type="text/css" href="%PUBLIC_URL%/assets/css/CustomInputStyle.css">
     <title>React App</title>
 
-    <script src="https://cdn.tiny.cloud/1/vglh308z4bo97w3ria7yermxmd9lmy0vo4x13kq18kaim0sw/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -48,31 +47,18 @@
     <script src="assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Vendors -->
-    <script src="assets/vendor/tiny-slider/dist/tiny-slider.js"></script>
-    <script src="assets/vendor/OverlayScrollbars-master/js/OverlayScrollbars.min.js"></script>
-    <script src="assets/vendor/choices.js/public/assets/scripts/choices.min.js"></script>
-    <script src="assets/vendor/glightbox-master/dist/js/glightbox.min.js"></script>
-    <script src="assets/vendor/flatpickr/dist/flatpickr.min.js"></script>
-    <script src="assets/vendor/plyr/plyr.js"></script>
-    <script src="assets/vendor/dropzone/dist/min/dropzone.min.js"></script>
-    <script src="assets/vendor/zuck.js/dist/zuck.min.js"></script>
-    <script src="assets/js/zuck-stories.js"></script>
+    <script src="%PUBLIC_URL%/assets/vendor/tiny-slider/dist/tiny-slider.js"></script>
+    <script src="%PUBLIC_URL%/assets/vendor/OverlayScrollbars-master/js/OverlayScrollbars.min.js"></script>
+    <script src="%PUBLIC_URL%/assets/vendor/choices.js/public/assets/scripts/choices.min.js"></script>
+    <script src="%PUBLIC_URL%/assets/vendor/glightbox-master/dist/js/glightbox.min.js"></script>
+    <script src="%PUBLIC_URL%/assets/vendor/flatpickr/dist/flatpickr.min.js"></script>
+    <script src="%PUBLIC_URL%/assets/vendor/plyr/plyr.js"></script>
+    <script src="%PUBLIC_URL%/assets/vendor/dropzone/dist/min/dropzone.min.js"></script>
+    <script src="%PUBLIC_URL%/assets/vendor/zuck.js/dist/zuck.min.js"></script>
+    <script src="%PUBLIC_URL%/assets/js/zuck-stories.js"></script>
 
     <!-- Theme Functions -->
-    <script src="assets/js/functions.js"></script>
+    <script src="%PUBLIC_URL%/assets/js/functions.js"></script>
 
-    <script>
-      tinymce.init({
-        selector: 'textarea#submit',
-        plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss',
-        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-        tinycomments_mode: 'embedded',
-        tinycomments_author: 'Author name',
-        mergetags_list: [
-          { value: 'First.Name', title: 'First Name' },
-          { value: 'Email', title: 'Email' },
-        ]
-      });
-    </script>
   </body>
 </html>

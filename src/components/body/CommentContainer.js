@@ -46,7 +46,7 @@ const CommentContainer = ({postId, setCommentCounts}) => {
             {/*Create Comment*/}
         <div class="d-flex mb-3">
             <div className="avatar avatar-xs me-2">
-                <a href="#!"> <img className="avatar-img rounded-circle" src="assets/images/avatar/12.jpg" alt=""/> </a>
+                <a href="#!"> <img className="avatar-img rounded-circle" src="/assets/images/avatar/12.jpg" alt=""/> </a>
             </div>
             <form className="nav nav-item w-100 position-relative" onSubmit={handleSubmit}>
                 <textarea data-autoresize className="form-control pe-5 bg-light" rows="1" id="contents" name="contents"
