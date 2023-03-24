@@ -12,7 +12,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/submit" element={<Submit />} />
             <Route path="/read/:id" element={<Read />} />
-            <Route path="/search/:word" element={<Search/>} />
+            <Route path="/search/:q" element={<Search/>} />
         </Routes>
     </BrowserRouter>
   );

@@ -82,7 +82,7 @@ const Comment = ({ comment, setCommentCounts }) => {
                 <form className="nav nav-item w-100 position-relative" onSubmit={handleSubmit}>
                 <textarea data-autoresize className="form-control pe-5 bg-light" rows="1" id="contents" name="contents" value={contents}
                           onChange={handleInputChange}
-                          placeholder="댓글을 입력하세요..."/>
+                          placeholder="댓글을 입력하세요"/>
                     <button
                         className="nav-link bg-transparent px-3 position-absolute top-50 end-0 translate-middle-y border-0"
                         type="submit">

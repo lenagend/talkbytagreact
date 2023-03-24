@@ -6,6 +6,7 @@ import PostSubmit from "./PostSubmit";
 import {useState} from 'react';
 import PostNotice from "./PostNotice";
 import PostRead from "./PostRead";
+import SearchList from "./SearchList";
 
 
 function Container( { page, post} ){
@@ -26,7 +27,7 @@ function Container( { page, post} ){
                 return (
                     <>
                         <HomeSubmit />
-                        <PostList />
+                        <SearchList />
                     </>
                 );
             default:

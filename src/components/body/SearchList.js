@@ -1,22 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, useParams} from 'react-router-dom';
 import axios from 'axios';
 import {API_BASE_URL, LIMIT, OFFSET} from "../../config/config";
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 
 
-const PostList = () => {
+const SearchList = () => {
     const [offset, setOffset] = useState(OFFSET);
     const limit = LIMIT;
     const [posts, setPosts] = useState([]);
     const [isLastPost, setIsLastPost] = useState(false);
     const navigate = useNavigate();
+    const { q } = useParams();
 
 
     const fetchPosts = async () => {
         try {
-            const response = await axios.get(`${API_BASE_URL}/api/posts?offset=${offset}&limit=${limit}`);
+            const response = await axios.get(`${API_BASE_URL}/api/posts/search?q=${q}&offset=${offset}&limit=${limit}`);
             const postsData = response.data;
 
             // 마지막 포스트 여부를 판단
@@ -48,9 +49,8 @@ const PostList = () => {
     };
 
     useEffect(() => {
-
         fetchPosts();
-    }, []);
+    }, [q]);
 
     const handleEdit = (post) => {
         navigate('/submit', {state : {post}});
@@ -128,4 +128,4 @@ const PostList = () => {
     );
 };
 
-export default PostList;
+export default SearchList;
