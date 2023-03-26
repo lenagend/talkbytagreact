@@ -1,8 +1,0 @@
-.vertical-centered-placeholder::placeholder {
-    position: absolute;
-    top: 50%;
-    left: 15px;
-    right: 0;
-    transform: translateY(-50%);
-    pointer-events: none;
-}

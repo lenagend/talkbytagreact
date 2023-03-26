@@ -14,15 +14,16 @@ const SearchList = () => {
     const navigate = useNavigate();
     const { q } = useParams();
 
-
-    const fetchPosts = async () => {
+    const fetchPosts = async (newOffset) => {
         try {
-            const response = await axios.get(`${API_BASE_URL}/api/posts/search?q=${q}&offset=${offset}&limit=${limit}`);
+            const response = await axios.get(`${API_BASE_URL}/api/posts/search?q=${q}&offset=${newOffset}&limit=${limit}`);
             const postsData = response.data;
 
             // 마지막 포스트 여부를 판단
-            if (postsData.length < limit) {
+            if (!postsData || postsData.length < limit) {
                 setIsLastPost(true);
+            } else {
+                setIsLastPost(false);
             }
 
             const fetchCommentCounts = async () => {
@@ -32,8 +33,8 @@ const SearchList = () => {
                 });
 
                 const commentCounts = await Promise.all(commentCountPromises);
-                return commentCounts
-            }
+                return commentCounts;
+            };
 
             const commentCounts = await fetchCommentCounts();
 
@@ -41,16 +42,29 @@ const SearchList = () => {
                 return { ...post, commentCount: commentCounts[index] };
             });
 
-            setPosts([...posts, ...postsWithCommentCounts]);
-            setOffset(offset + limit);
+            return postsWithCommentCounts;
         } catch (error) {
             console.error('Error fetching posts:', error);
+            return [];
         }
     };
 
+    const loadInitialPosts = async () => {
+        setOffset(OFFSET);
+        const initialPosts = await fetchPosts(OFFSET);
+        setPosts(initialPosts);
+    };
+
     useEffect(() => {
-        fetchPosts();
+        loadInitialPosts();
     }, [q]);
+
+    const loadMorePosts = async () => {
+        const newOffset = offset + limit;
+        const morePosts = await fetchPosts(newOffset);
+        setPosts([...posts, ...morePosts]);
+        setOffset(newOffset);
+    };
 
     const handleEdit = (post) => {
         navigate('/submit', {state : {post}});
@@ -62,7 +76,7 @@ const SearchList = () => {
 
 
     return (
-        <InfiniteScroll next={fetchPosts} hasMore={!isLastPost} loader={
+        <InfiniteScroll  next={loadMorePosts} hasMore={!isLastPost} loader={
             <div>
                 <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
                  Loading
