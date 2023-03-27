@@ -1,15 +1,14 @@
-import React from "react";
-import {Editor} from "@tinymce/tinymce-react";
-import { useState } from 'react';
+import React, { useState, useRef, useCallback  } from 'react';
 import axios from "axios";
 import {API_BASE_URL} from "../../config/config";
 import {useNavigate} from "react-router-dom";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 function PostSubmit( {post} ) {
     const [contents, setContents] = useState('');
     const [hashTag, setHashTag] = useState('');
     const navigate = useNavigate();
-
 
     const handleEditorChange = (contents) => {
         setContents(contents);
@@ -54,21 +53,62 @@ function PostSubmit( {post} ) {
                 })
                 .catch((err) => console.log(err));
         }
-
-
     }
 
-        return (
-            <div className="card card-body" style={{ flex: "0 0 auto" }}>
-                    <div className="d-flex mb-3">
-                        <Editor apiKey='vglh308z4bo97w3ria7yermxmd9lmy0vo4x13kq18kaim0sw'
-                                initialValue={post ? post.contents : ''}
-                                init={{ width : "100%",
-                            height : 600,
-                            menubar : false,
+    const reactQuillRef = useRef(null);
 
-                                }}
-                        onEditorChange={handleEditorChange}/>
+    const customImageHandler = useCallback(async () => {
+        const input = document.createElement('input');
+        input.setAttribute('type', 'file');
+        input.setAttribute('accept', 'image/*');
+        input.click();
+
+        input.onchange = async () => {
+            const file = input.files[0];
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                const response = await axios.post(`${API_BASE_URL}/api/posts/upload-image`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
+
+                const data = response.data;
+                console.log(`${API_BASE_URL}${data.location}`);
+                const quill = reactQuillRef.current.getEditor();
+                const range = quill.getSelection();
+                quill.insertEmbed(range.index, 'image', `${API_BASE_URL}${data.location}`);
+            } catch (error) {
+                console.error('Error uploading image', error);
+            }
+        };
+    }, []);
+
+    const modules = {
+        toolbar: {
+            container: [
+                // Add your toolbar options here
+                ['bold', 'italic', 'underline', 'strike'],
+                ['image'],
+            ],
+            handlers: {
+                image: customImageHandler,
+            },
+        },
+    };
+
+    return (
+            <div className="card card-body" style={{ flex: "0 0 auto" }}>
+                    <div className="d-flex mb-5">
+                        <ReactQuill style={{ width: "100%", height: "600px"}}
+                            ref={reactQuillRef}
+                            theme="snow"
+                            value={contents}
+                            onChange={handleEditorChange}
+                            modules={modules}
+                        />
                     </div>
                     <ul className="nav nav-pills nav-stack small fw-normal">
                         <li className="nav-item ms-lg-auto">
