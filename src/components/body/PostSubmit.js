@@ -1,14 +1,20 @@
-import React, { useState, useRef, useCallback  } from 'react';
+import React, { useState, useRef, useCallback, useEffect  } from 'react';
 import axios from "axios";
 import {API_BASE_URL} from "../../config/config";
 import {useNavigate} from "react-router-dom";
-import ReactQuill from 'react-quill';
+import ReactQuill, { Quill } from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import QuillImageDropAndPaste from 'quill-image-drop-and-paste'
+
+Quill.register('modules/imageDropAndPaste', QuillImageDropAndPaste)
+
 
 function PostSubmit( {post} ) {
-    const [contents, setContents] = useState('');
+    const [contents, setContents] = useState(post?.contents || '');
     const [hashTag, setHashTag] = useState('');
     const navigate = useNavigate();
+
+
 
     const handleEditorChange = (contents) => {
         setContents(contents);
@@ -96,6 +102,9 @@ function PostSubmit( {post} ) {
             handlers: {
                 image: customImageHandler,
             },
+        },
+        imageDropAndPaste: {
+            handler: customImageHandler, // 커스텀 이미지 핸들러를 사용합니다.
         },
     };
 
