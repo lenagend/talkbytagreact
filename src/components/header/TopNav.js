@@ -1,19 +1,31 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import NavSearch from "./NavSearch";
+import NavRight from "./NavRight";
+import {useNavigate} from "react-router-dom";
 
-class TopNav extends React.Component {
-    render() {
+const TopNav = () =>  {
+
+        const [isLoggedIn, setIsLoggedIn] = useState(false);
+        const navigate = useNavigate();
+
+        useEffect(() => {
+            const token = localStorage.getItem('token');
+            if (token) {
+                setIsLoggedIn(true);
+            }
+        }, []);
+
+        const handleLoginButton = () =>{
+            navigate("/login");
+        }
+
         return (
             <nav className="navbar navbar-expand-lg">
                 <div className="container">
-                    {/*Logo Starg*/}
                     <a className="navbar-brand" href="/">
                         <img className="light-mode-item navbar-brand-item" src="/assets/images/logo.svg" alt="logo"/>
                         <img className="dark-mode-item navbar-brand-item" src="/assets/images/logo.svg" alt="logo"/>
                     </a>
-                    {/*Logo End*/}
-
-                   {/*Responsive navbar toggler */}
                     <button class="navbar-toggler ms-auto icon-md btn btn-light p-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-animation">
                         <span></span>
@@ -21,14 +33,18 @@ class TopNav extends React.Component {
                         <span></span>
                         </span>
                     </button>
-                    {/*Main navbar START*/}
                     <div className="collapse navbar-collapse" id="navbarCollapse">
                         <NavSearch />
                     </div>
+                    {isLoggedIn && (<NavRight />)}
+                    {!isLoggedIn && (
+                        <button type="button" className="btn btn-outline-primary" onClick={handleLoginButton}>로그인</button>
+                    )}
+
                 </div>
             </nav>
         );
-    }
+
 }
 
 export default TopNav;

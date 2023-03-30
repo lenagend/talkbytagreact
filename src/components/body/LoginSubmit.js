@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import axios from "axios";
 import {API_BASE_URL} from "../../config/config";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 
 function LoginSubmit({originPath}){
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const navigate = useNavigate();
 
     const handleUsernameChange = (e) => {
         setUsername(e.target.value);
@@ -17,6 +16,8 @@ function LoginSubmit({originPath}){
         setPassword(e.target.value);
     }
 
+    const navigate = useNavigate();
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -24,7 +25,7 @@ function LoginSubmit({originPath}){
             const response = await axios.post(`${API_BASE_URL}/api/login`, { username, password });
             const token = response.data.token;
             localStorage.setItem('token', token);
-            navigate(originPath);
+            navigate("/");
         } catch (error) {
             console.error('Login failed:', error);
         }

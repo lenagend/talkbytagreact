@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PostList from './PostList';
 import HomeSubmit from "./HomeSubmit";
 import RightSidebar from "./RightSidebar";
@@ -7,9 +7,21 @@ import {useState} from 'react';
 import PostNotice from "./PostNotice";
 import PostRead from "./PostRead";
 import SearchList from "./SearchList";
+import LeftSidebar from "./LeftSidebar";
 
 
-function Container( { page, post} ){
+const Container = ( { page, post} ) => {
+
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            setIsLoggedIn(true);
+        }
+    }, []);
+
+
     const renderContent = () => {
         switch (page) {
             case 'home':
@@ -39,6 +51,7 @@ function Container( { page, post} ){
         <main>
             <div className="container">
                 <div className="row g-4">
+                    {page === 'home' && isLoggedIn &&  <LeftSidebar />}
                     <div className="col-md-8 col-lg-6 vstack gap-4">{renderContent()}</div>
                     <div className="col-lg-3"><RightSidebar /></div>
                 </div>

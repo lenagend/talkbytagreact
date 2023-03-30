@@ -13,6 +13,8 @@ function SignUpSubmit(){
     const navigate = useNavigate();
     const [passwordError, setPasswordError] = useState('');
     const [passwordMismatchError, setPasswordMismatchError] = useState('');
+    const [serverValidateError, setServerValidateError] = useState('');
+    const [signupSuccess, setSignupSuccess] = useState(false);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -49,14 +51,28 @@ function SignUpSubmit(){
 
         try {
             const response = await axios.post(`${API_BASE_URL}/api/register`, formData);
-            navigate("/");
+            setSignupSuccess(true);
         } catch (error) {
-            console.error('Sign up failed:', error);
+            setServerValidateError(error.response.data);
+            setTimeout(() => {
+                setServerValidateError(null);
+            }, 3000);
         }
     };
 
     return (
         <main>
+            {signupSuccess && (
+                <div className="alert alert-success" role="alert">
+                    회원가입에 성공했습니다. <a href="/login" className="alert-link">로그인 하러가기</a>
+                    . 감사합니다.
+                </div>
+            )}
+            {serverValidateError && (
+                <div className="alert alert-warning" role="alert">
+                <strong>회원가입 실패!</strong> {serverValidateError}
+            </div>
+            )}
             <div className="container">
                 <div className="row justify-content-center align-items-center vh-100 py-5">
                     <div className="col-sm-10 col-md-8 col-lg-7 col-xl-6 col-xxl-5">
