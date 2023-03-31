@@ -1,10 +1,8 @@
 import React, {useContext} from 'react';
 import AuthContext from "../security/AuthContext";
-import {useNavigate} from "react-router-dom";
 
 const NavRight = () => {
     const { logout } = useContext(AuthContext);
-    const navigate = useNavigate();
 
     const handleLogout = () => {
         logout();

@@ -1,27 +1,52 @@
 import { createContext, useState, useEffect } from 'react';
+import axios from "axios";
+import {API_BASE_URL} from "../../config/config";
 
-const AuthContext = createContext();
+const AuthContext = createContext({
+    isAuthenticated: false,
+    setIsAuthenticated: () => {},
+    login: () => {},
+    logout: () => {},
+});
 
 export const AuthProvider = ({ children }) => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (token) {
-            setIsLoggedIn(true);
-        } else {
-            setIsLoggedIn(false);
+            axios.get(`${API_BASE_URL}/api/verify`, { headers: { Authorization: `Bearer ${token}` } })
+                .then(() => {
+                    setIsAuthenticated(true);
+                })
+                .catch(() => {
+                    setIsAuthenticated(false);
+                    localStorage.removeItem('token');
+                });
         }
     }, []);
 
+
+
+    const login = async (username, password) => {
+        try {
+            const response = await axios.post(`${API_BASE_URL}/api/login`, { username, password });
+            const token = response.data.token;
+            localStorage.setItem('token', token);
+            setIsAuthenticated(true);
+
+        } catch (error) {
+            console.error('Login failed:', error);
+        }
+    };
+
     const logout = () => {
-        console.log("로그아웃 되었습니다");
         localStorage.removeItem('token');
-        setIsLoggedIn(false);
+        setIsAuthenticated(false);
     };
 
     return (
-        <AuthContext.Provider value={{ isLoggedIn, logout }}>
+        <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, logout, login }}>
             {children}
         </AuthContext.Provider>
     );
