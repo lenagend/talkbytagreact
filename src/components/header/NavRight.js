@@ -1,13 +1,15 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, {useContext} from 'react';
+import AuthContext from "../security/AuthContext";
+import {useNavigate} from "react-router-dom";
 
 const NavRight = () => {
+    const { logout } = useContext(AuthContext);
     const navigate = useNavigate();
 
-    const logout = () => {
-        localStorage.removeItem('token');
-        navigate('/');
-    }
+    const handleLogout = () => {
+        logout();
+        window.location.href="/";
+    };
 
     return (
         <div>
@@ -36,7 +38,7 @@ const NavRight = () => {
                         </li>
 
                         <li className="dropdown-divider"></li>
-                        <li><a className="dropdown-item bg-danger-soft-hover" href="#!" onClick={logout}>
+                        <li><a className="dropdown-item bg-danger-soft-hover" href="#!" onClick={handleLogout}>
                             <i className="bi bi-power fa-fw me-2"></i>Sign Out</a></li>
                     </ul>
                 </li>

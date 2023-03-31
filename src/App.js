@@ -10,6 +10,7 @@ import axios from "axios";
 import PrivateRoute from "./components/security/PrivateRoute";
 import {API_BASE_URL} from "./config/config";
 import SignUp from "./components/page/SignUp";
+import {AuthProvider} from "./components/security/AuthContext";
 
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -29,18 +30,20 @@ function App() {
     }, []);
 
     return (
-    <BrowserRouter>
-        <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/read/:id" element={<Read />} />
-            <Route path="/search/:q" element={<Search/>} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<SignUp />}/>
-            <Route exact path='/submit' element={<PrivateRoute isAuthenticated={isAuthenticated} originPath ="/submit"/>}>
-                <Route exact path='/submit' element={<Submit/>}/>
-            </Route>
-        </Routes>
-    </BrowserRouter>
+        <AuthProvider>
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/read/:id" element={<Read />} />
+                    <Route path="/search/:q" element={<Search/>} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/signup" element={<SignUp />}/>
+                    <Route exact path='/submit' element={<PrivateRoute originPath ="/submit"/>}>
+                        <Route exact path='/submit' element={<Submit/>}/>
+                    </Route>
+                </Routes>
+            </BrowserRouter>
+        </AuthProvider>
   );
 }
 
