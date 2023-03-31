@@ -1,6 +1,27 @@
-import {useEffect} from "react";
+import {useContext, useEffect} from "react";
+import AuthContext from "../security/AuthContext";
+import axios from "axios";
+import {API_BASE_URL} from "../../config/config";
 
 const LeftSidebar = () => {
+    const { isAuthenticated } = useContext(AuthContext);
+    // const [userInfo, setUserInfo] = useContext([]);
+
+    useEffect(() => {
+        if(isAuthenticated){
+
+        }
+    }, []);
+
+    const getUserInfo = async () =>{
+        try{
+            const response = await axios.get(`${API_BASE_URL}/api/posts`);
+            const postsData = response.data;
+
+        }catch (error){
+            console.log("유저정보를 불러오는데 실패했습니다",error);
+        }
+    }
 
         return(
             <div class="col-lg-3">
@@ -35,18 +56,18 @@ const LeftSidebar = () => {
                                         <p class="mt-3">I'd love to change the world, but they won’t give me the source code.</p>
                                         <div class="hstack gap-2 gap-xl-3 justify-content-center">
                                             <div>
-                                                <h6 class="mb-0">256</h6>
-                                                <small>Post</small>
+                                                <h6 class="mb-0">0</h6>
+                                                <small>포스트</small>
                                             </div>
                                             <div class="vr"></div>
                                             <div>
-                                                <h6 class="mb-0">2.5K</h6>
-                                                <small>Followers</small>
+                                                <h6 class="mb-0">0</h6>
+                                                <small>댓글</small>
                                             </div>
                                             <div class="vr"></div>
                                             <div>
-                                                <h6 class="mb-0">365</h6>
-                                                <small>Following</small>
+                                                <h6 class="mb-0">0</h6>
+                                                <small>좋아요</small>
                                             </div>
                                         </div>
                                     </div>

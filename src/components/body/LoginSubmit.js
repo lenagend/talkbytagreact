@@ -27,7 +27,7 @@ function LoginSubmit({originPath}){
 
         await login(username, password);
 
-        navigate(originPath);
+        navigate(originPath ? originPath : "/");
 
     };
 
