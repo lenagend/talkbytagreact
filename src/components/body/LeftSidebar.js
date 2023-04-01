@@ -51,7 +51,7 @@ const LeftSidebar = () => {
                                         <div class="avatar avatar-lg mt-n5 mb-3">
                                             <a href="#!"><img class="avatar-img rounded border border-white border-3" src="/assets/images/avatar/07.jpg" alt="" /></a>
                                         </div>
-                                        <h5 class="mb-0"> <a href="#!">Sam Lanson </a> </h5>
+                                        <h5 class="mb-0"> <a href="#!">여기에사용자이름 </a> </h5>
                                         <small>Web Developer at Webestica</small>
                                         <p class="mt-3">I'd love to change the world, but they won’t give me the source code.</p>
                                         <div class="hstack gap-2 gap-xl-3 justify-content-center">
