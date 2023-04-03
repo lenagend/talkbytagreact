@@ -94,7 +94,7 @@ const PostList = () => {
                                     </h6>
                                     <span className="nav-item small">{new Date(post.createdAt).toLocaleString()}</span>
                                 </div>
-                                <p className="mb-0 small" style={{textAlign: 'left'}}>{post.authorId}</p>
+                                <p className="mb-0 small" style={{textAlign: 'left'}}>{post.username}</p>
                             </div>
                         </div>
                         <div>

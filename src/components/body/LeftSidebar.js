@@ -1,22 +1,25 @@
-import {useContext, useEffect} from "react";
+import {useContext, useEffect, useState} from "react";
 import AuthContext from "../security/AuthContext";
 import axios from "axios";
 import {API_BASE_URL} from "../../config/config";
 
 const LeftSidebar = () => {
     const { isAuthenticated } = useContext(AuthContext);
-    // const [userInfo, setUserInfo] = useContext([]);
+    const [userInfo, setUserInfo] = useState(null);
 
     useEffect(() => {
         if(isAuthenticated){
-
+            fetchUserInfo();
         }
     }, []);
 
-    const getUserInfo = async () =>{
+    const fetchUserInfo = async () =>{
         try{
-            const response = await axios.get(`${API_BASE_URL}/api/posts`);
-            const postsData = response.data;
+            const token = localStorage.getItem('token');
+            const response = await axios.get(`${API_BASE_URL}/api/userInfo`,{
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            setUserInfo(response.data);
 
         }catch (error){
             console.log("유저정보를 불러오는데 실패했습니다",error);
@@ -51,9 +54,8 @@ const LeftSidebar = () => {
                                         <div class="avatar avatar-lg mt-n5 mb-3">
                                             <a href="#!"><img class="avatar-img rounded border border-white border-3" src="/assets/images/avatar/07.jpg" alt="" /></a>
                                         </div>
-                                        <h5 class="mb-0"> <a href="#!">Sam Lanson </a> </h5>
-                                        <small>Web Developer at Webestica</small>
-                                        <p class="mt-3">I'd love to change the world, but they won’t give me the source code.</p>
+                                        <h5 class="mb-0"> <a href="#!">{userInfo ? userInfo.nickname : null}</a> </h5>
+                                        <p class="mt-3">{userInfo && userInfo.modifiedAt ? '환영합니다!' : '아래의 설정버튼을 눌러 프로필을 만들어 보세요!'}</p>
                                         <div class="hstack gap-2 gap-xl-3 justify-content-center">
                                             <div>
                                                 <h6 class="mb-0">0</h6>

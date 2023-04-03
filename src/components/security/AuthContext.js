@@ -24,6 +24,7 @@ export const AuthProvider = ({ children }) => {
                     localStorage.removeItem('token');
                 });
         }
+
     }, []);
 
 
