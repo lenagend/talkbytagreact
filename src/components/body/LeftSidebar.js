@@ -55,7 +55,7 @@ const LeftSidebar = () => {
                                             <a href="#!"><img class="avatar-img rounded border border-white border-3" src="/assets/images/avatar/07.jpg" alt="" /></a>
                                         </div>
                                         <h5 class="mb-0"> <a href="#!">{userInfo ? userInfo.nickname : null}</a> </h5>
-                                        <p class="mt-3">{userInfo && userInfo.modifiedAt ? '환영합니다!' : '아래의 설정버튼을 눌러 프로필을 만들어 보세요!'}</p>
+                                        <p class="mt-3">{userInfo && userInfo.modifiedAt ? '환영합니다~!' : '아래의 설정버튼을 눌러 프로필을 만들어 보세요!'}</p>
                                         <div class="hstack gap-2 gap-xl-3 justify-content-center">
                                             <div>
                                                 <h6 class="mb-0">0</h6>
