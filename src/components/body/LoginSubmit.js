@@ -1,16 +1,15 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import axios from "axios";
 import {API_BASE_URL} from "../../config/config";
 import { useNavigate } from 'react-router-dom';
 import AuthContext from "../security/AuthContext";
 
 
-function LoginSubmit({originPath}){
+const LoginSubmit = ({originPath}) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
     const { login } = useContext(AuthContext);
-
 
     const handleUsernameChange = (e) => {
         setUsername(e.target.value);

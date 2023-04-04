@@ -1,19 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import NavSearch from "./NavSearch";
 import NavRight from "./NavRight";
 import {useNavigate} from "react-router-dom";
+import AuthContext from "../security/AuthContext";
 
 const TopNav = () =>  {
+        const { isAuthenticated } = useContext(AuthContext);
 
-        const [isLoggedIn, setIsLoggedIn] = useState(false);
         const navigate = useNavigate();
-
-        useEffect(() => {
-            const token = localStorage.getItem('token');
-            if (token) {
-                setIsLoggedIn(true);
-            }
-        }, []);
 
         const handleLoginButton = () =>{
             navigate("/login");
@@ -36,11 +30,9 @@ const TopNav = () =>  {
                     <div className="collapse navbar-collapse" id="navbarCollapse">
                         <NavSearch />
                     </div>
-                    {isLoggedIn && (<NavRight />)}
-                    {!isLoggedIn && (
+                    {isAuthenticated ? <NavRight /> : (
                         <button type="button" className="btn btn-outline-primary" onClick={handleLoginButton}>로그인</button>
                     )}
-
                 </div>
             </nav>
         );

@@ -2,15 +2,12 @@ import { createContext, useState, useEffect } from 'react';
 import axios from "axios";
 import {API_BASE_URL} from "../../config/config";
 
-const AuthContext = createContext({
-    isAuthenticated: false,
-    setIsAuthenticated: () => {},
-    login: () => {},
-    logout: () => {},
-});
+const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [userInfo, setUserInfo] = useState(null);
+
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -18,6 +15,7 @@ export const AuthProvider = ({ children }) => {
             axios.get(`${API_BASE_URL}/api/verify`, { headers: { Authorization: `Bearer ${token}` } })
                 .then(() => {
                     setIsAuthenticated(true);
+                    fetchUserInfo();
                 })
                 .catch(() => {
                     setIsAuthenticated(false);
@@ -35,7 +33,7 @@ export const AuthProvider = ({ children }) => {
             const token = response.data.token;
             localStorage.setItem('token', token);
             setIsAuthenticated(true);
-
+            fetchUserInfo();
         } catch (error) {
             console.error('Login failed:', error);
         }
@@ -46,8 +44,21 @@ export const AuthProvider = ({ children }) => {
         setIsAuthenticated(false);
     };
 
+
+    const fetchUserInfo = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await axios.get(`${API_BASE_URL}/api/userInfo`, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            setUserInfo(response.data);
+        } catch (error) {
+            console.log("유저정보를 불러오는데 실패했습니다", error);
+        }
+    };
+
     return (
-        <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, logout, login }}>
+        <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, logout, login, userInfo, setUserInfo,  fetchUserInfo, }}>
             {children}
         </AuthContext.Provider>
     );

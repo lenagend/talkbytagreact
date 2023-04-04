@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 import PostList from './PostList';
 import HomeSubmit from "./HomeSubmit";
 import RightSidebar from "./RightSidebar";
@@ -8,19 +8,11 @@ import PostNotice from "./PostNotice";
 import PostRead from "./PostRead";
 import SearchList from "./SearchList";
 import LeftSidebar from "./LeftSidebar";
+import AuthContext from "../security/AuthContext";
 
 
 const Container = ( { page, post} ) => {
-
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            setIsLoggedIn(true);
-        }
-    }, []);
-
+    const { isAuthenticated } = useContext(AuthContext);
 
     const renderContent = () => {
         switch (page) {
@@ -51,7 +43,7 @@ const Container = ( { page, post} ) => {
         <main>
             <div className="container">
                 <div className="row g-4">
-                    {page === 'home' && isLoggedIn &&  <LeftSidebar />}
+                    {page === 'home' && isAuthenticated &&  <LeftSidebar />}
                     <div className="col-md-8 col-lg-6 vstack gap-4">{renderContent()}</div>
                     <div className="col-lg-3"><RightSidebar /></div>
                 </div>

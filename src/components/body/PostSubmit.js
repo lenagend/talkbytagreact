@@ -1,13 +1,16 @@
-import React, { useState, useRef, useCallback  } from 'react';
+import React, {useState, useRef, useCallback, useContext} from 'react';
 import axios from "axios";
 import {API_BASE_URL} from "../../config/config";
 import {useNavigate} from "react-router-dom";
 import ReactQuill, { Quill } from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import AuthContext from "../security/AuthContext";
 
 function PostSubmit( {post} ) {
     const [contents, setContents] = useState(post?.contents || '');
     const [hashTag, setHashTag] = useState('');
+    const { userInfo, fetchUserInfo } = useContext(AuthContext);
+
     const navigate = useNavigate();
 
     const handleEditorChange = (contents) => {
@@ -40,8 +43,9 @@ function PostSubmit( {post} ) {
         const updatedHashTag = hashTag || "@freeTalk";
 
         if(!post){
-            axios.post(`${API_BASE_URL}/api/posts`, { contents: contents, hashTag : updatedHashTag })
+            axios.post(`${API_BASE_URL}/api/posts`, { contents: contents, hashTag : updatedHashTag, username : userInfo.username })
                 .then(() => {
+                    fetchUserInfo();
                     navigate('/');
                 })
                 .catch((err) => console.log(err));

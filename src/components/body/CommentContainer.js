@@ -1,11 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {API_BASE_URL, LIMIT, OFFSET} from "../../config/config";
 import axios from "axios";
 import Comment from "./Comment";
+import AuthContext from "../security/AuthContext";
+import { useNavigate } from 'react-router-dom';
+
 
 const CommentContainer = ({postId, setCommentCounts}) => {
     const [contents, setContents] = useState('');
     const [comments, setComments] = useState([]);
+    const { isAuthenticated ,userInfo, fetchUserInfo } = useContext(AuthContext);
+    const navigate = useNavigate();
+
 
     useEffect(() => {
         fetchComments();
@@ -41,25 +47,34 @@ const CommentContainer = ({postId, setCommentCounts}) => {
         }
     };
 
+    const handleLoginClick = () => {
+        navigate('/login', { state: { originPath: window.location.pathname } });
+    };
+
     return (
         <div>
-            {/*Create Comment*/}
-        <div class="d-flex mb-3">
-            <div className="avatar avatar-xs me-2">
-                <a href="#!"> <img className="avatar-img rounded-circle" src="/assets/images/avatar/12.jpg" alt=""/> </a>
-            </div>
-            <form className="nav nav-item w-100 position-relative" onSubmit={handleSubmit}>
+            {isAuthenticated ? (
+                <div className="d-flex mb-3">
+                    <div className="avatar avatar-xs me-2">
+                        <a href="#!"> <img className="avatar-img rounded-circle" src="/assets/images/avatar/12.jpg"
+                                           alt=""/> </a>
+                    </div>
+                    <form className="nav nav-item w-100 position-relative" onSubmit={handleSubmit}>
                 <textarea data-autoresize className="form-control pe-5 bg-light" rows="1" id="contents" name="contents"
-    onChange={handleInputChange} value={contents}
-    placeholder="댓글을 입력하세요"/>
-                <button
-                    className="nav-link bg-transparent px-3 position-absolute top-50 end-0 translate-middle-y border-0"
-                    type="submit">
-                    <i className="bi bi-send-fill"> </i>
-                </button>
-            </form>
-        </div>
-            {/*Create Comment*/}
+                          onChange={handleInputChange} value={contents}
+                          placeholder="댓글을 입력하세요"/>
+                        <button
+                            className="nav-link bg-transparent px-3 position-absolute top-50 end-0 translate-middle-y border-0"
+                            type="submit">
+                            <i className="bi bi-send-fill"> </i>
+                        </button>
+                    </form>
+                </div>
+            ) : (
+                    <div className="alert alert-warning" role="alert">
+                        댓글을 달기위해 <a href="#!" onClick={handleLoginClick} className="alert-link">로그인</a> 하세요.
+                    </div>
+            )}
 
             {/*Comment List*/}
             <ul className="comment-wrap list-unstyled">
