@@ -1,8 +1,10 @@
 import React, {useContext} from 'react';
 import AuthContext from "../security/AuthContext";
+import {DEFAULT_PROFILE_IMAGE} from "../../config/config";
 
 const NavRight = () => {
     const { logout, userInfo } = useContext(AuthContext);
+    const profileImageSrc = userInfo.profileImage;
 
     const handleLogout = () => {
         logout();
@@ -16,19 +18,19 @@ const NavRight = () => {
                     <a className="nav-link btn icon-md p-0" href="#" id="profileDropdown" role="button"
                        data-bs-auto-close="outside" data-bs-display="static" data-bs-toggle="dropdown"
                        aria-expanded="false">
-                        <img className="avatar-img rounded-2" src={userInfo.profileImage} alt="" />
+                        <img className="avatar-img rounded-2" src={profileImageSrc} alt="" />
                     </a>
                     <ul className="dropdown-menu dropdown-animation dropdown-menu-end pt-3 small me-md-n3"
                         aria-labelledby="profileDropdown">
                         <li className="px-3">
                             <div className="d-flex align-items-center position-relative">
                                 <div className="avatar me-3">
-                                    <img className="avatar-img rounded-circle" src={userInfo.profileImage}
+                                    <img className="avatar-img rounded-circle" src={profileImageSrc}
                                          alt="avatar" />
                                 </div>
                                 <div>
-                                    <a className="h6 stretched-link" href="#">{userInfo.nickname}</a>
-                                    <p className="small m-0">님, 환영합니다!</p>
+                                    <a className="h6 stretched-link" href="#">Lori Ferguson</a>
+                                    <p className="small m-0">Web Developer</p>
                                 </div>
                             </div>
                             <a className="dropdown-item btn btn-primary-soft btn-sm my-2 text-center"
@@ -37,7 +39,7 @@ const NavRight = () => {
 
                         <li className="dropdown-divider"></li>
                         <li><a className="dropdown-item bg-danger-soft-hover" href="#!" onClick={handleLogout}>
-                            <i className="bi bi-power fa-fw me-2"></i>프로필 보기</a></li>
+                            <i className="bi bi-power fa-fw me-2"></i>로그아웃</a></li>
                     </ul>
                 </li>
             </ul>

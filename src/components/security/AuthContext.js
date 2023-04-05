@@ -6,7 +6,9 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [userInfo, setUserInfo] = useState(null);
+    const [userInfo, setUserInfo] = useState({
+        profileImage: "/assets/images/avatar/placeholder.jpg"
+    });
 
 
     useEffect(() => {
@@ -55,11 +57,13 @@ export const AuthProvider = ({ children }) => {
             const response = await axios.get(`${API_BASE_URL}/api/userInfo`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
-            const userInfoData = response.data;
-            setUserInfo({
-                ...userInfoData,
-                profileImage: userInfoData.profileImage || DEFAULT_PROFILE_IMAGE,
-            });
+
+            const userProfile = response.data;
+            if (!userProfile.profileImage) {
+                userProfile.profileImage = DEFAULT_PROFILE_IMAGE;
+            }
+            setUserInfo(userProfile);
+
         } catch (error) {
             console.log("유저정보를 불러오는데 실패했습니다", error);
         }
