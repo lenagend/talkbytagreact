@@ -3,7 +3,7 @@ import {API_BASE_URL, LIMIT, OFFSET} from "../../config/config";
 import axios from "axios";
 import Comment from "./Comment";
 import AuthContext from "../security/AuthContext";
-import { useNavigate } from 'react-router-dom';
+import {Navigate, useNavigate} from 'react-router-dom';
 
 
 const CommentContainer = ({postId, setCommentCounts}) => {
@@ -47,7 +47,8 @@ const CommentContainer = ({postId, setCommentCounts}) => {
         }
     };
 
-    const handleLoginClick = () => {
+    const handleLoginClick = (event) => {
+        event.preventDefault();
         navigate('/login', { state: { originPath: window.location.pathname } });
     };
 

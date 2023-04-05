@@ -34,8 +34,12 @@ export const AuthProvider = ({ children }) => {
             localStorage.setItem('token', token);
             setIsAuthenticated(true);
             fetchUserInfo();
+
+            return true;
         } catch (error) {
             console.error('Login failed:', error);
+
+            return false;
         }
     };
 

@@ -8,6 +8,7 @@ import AuthContext from "../security/AuthContext";
 const LoginSubmit = ({originPath}) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [loginError, setLoginError] = useState(false);
 
     const { login } = useContext(AuthContext);
 
@@ -24,14 +25,26 @@ const LoginSubmit = ({originPath}) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        await login(username, password);
+        const success = await login(username, password);
 
-        navigate(originPath ? originPath : "/");
+        if (success) {
+            navigate(originPath ? originPath : "/");
+        } else {
+           setLoginError(true);
+            setTimeout(() => {
+                setLoginError(false);
+            }, 3000);
+        }
 
     };
 
     return (
         <main>
+            {loginError && (
+                <div className="alert alert-warning" role="alert">
+                    <strong>로그인 실패!</strong> 아이디와 비밀번호를 확인해주세요.
+                </div>
+            )}
             <div className="container">
                 <div className="row justify-content-center align-items-center vh-100 py-5">
                     <div className="col-sm-10 col-md-8 col-lg-7 col-xl-6 col-xxl-5">
