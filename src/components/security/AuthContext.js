@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect } from 'react';
 import axios from "axios";
-import {API_BASE_URL} from "../../config/config";
+import {API_BASE_URL, DEFAULT_PROFILE_IMAGE} from "../../config/config";
 
 const AuthContext = createContext();
 
@@ -55,7 +55,11 @@ export const AuthProvider = ({ children }) => {
             const response = await axios.get(`${API_BASE_URL}/api/userInfo`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
-            setUserInfo(response.data);
+            const userInfoData = response.data;
+            setUserInfo({
+                ...userInfoData,
+                profileImage: userInfoData.profileImage || DEFAULT_PROFILE_IMAGE,
+            });
         } catch (error) {
             console.log("유저정보를 불러오는데 실패했습니다", error);
         }

@@ -1,11 +1,10 @@
 import {useContext, useEffect, useState} from "react";
 import AuthContext from "../security/AuthContext";
 import axios from "axios";
-import {API_BASE_URL} from "../../config/config";
+import {API_BASE_URL, DEFAULT_PROFILE_IMAGE} from "../../config/config";
 
 const LeftSidebar = () => {
     const { userInfo } = useContext(AuthContext);
-    const profileImageSrc = userInfo && userInfo.profileImage ? userInfo.profileImage : "/assets/images/avatar/placeholder.jpg";
 
         return(
             <div class="col-lg-3">
@@ -34,7 +33,7 @@ const LeftSidebar = () => {
                                     <div class="text-center">
                                         <div class="avatar avatar-lg mt-n5 mb-3">
                                             <a href="#!">
-                                                <img class="avatar-img rounded border border-white border-3" src={profileImageSrc} alt="" />
+                                                <img class="avatar-img rounded border border-white border-3" src={userInfo.profileImage} alt="" />
                                             </a>
                                         </div>
                                         <h5 class="mb-0"> <a href="#!">{userInfo ? userInfo.nickname : null}</a> </h5>
