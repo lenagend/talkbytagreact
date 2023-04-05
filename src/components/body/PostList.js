@@ -19,6 +19,8 @@ const PostList = () => {
             const response = await axios.get(`${API_BASE_URL}/api/posts?offset=${offset}&limit=${limit}`);
             const postsData = response.data;
 
+            console.log(postsData);
+
             // 마지막 포스트 여부를 판단
             if (postsData.length < limit) {
                 setIsLastPost(true);
@@ -50,6 +52,7 @@ const PostList = () => {
     useEffect(() => {
 
         fetchPosts();
+
     }, []);
 
     const handleEdit = (post) => {
@@ -81,7 +84,7 @@ const PostList = () => {
                             {/* Avatar */}
                             <div className="avatar avatar-story me-2">
                                 <a href="#!">
-                                    <img className="avatar-img rounded-circle" src="/assets/images/avatar/04.jpg" alt="" />
+                                    <img className="avatar-img rounded-circle" src={post.profileImage} alt="" />
                                 </a>
                             </div>
                             {/* Info */}
@@ -94,7 +97,7 @@ const PostList = () => {
                                     </h6>
                                     <span className="nav-item small">{new Date(post.createdAt).toLocaleString()}</span>
                                 </div>
-                                <p className="mb-0 small" style={{textAlign: 'left'}}>{post.username}</p>
+                                <p className="mb-0 small" style={{textAlign: 'left'}}>{post.nickname}</p>
                             </div>
                         </div>
                         <div>
