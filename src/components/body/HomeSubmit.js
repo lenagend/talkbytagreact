@@ -4,7 +4,7 @@ import AuthContext from "../security/AuthContext";
 
 function HomeSubmit(){
     const { userInfo } = useContext(AuthContext);
-    const profileImageSrc = userInfo.profileImage;
+    const profileImageSrc = userInfo && userInfo.profileImage ? userInfo.profileImage : "/assets/images/avatar/placeholder.jpg";
 
     const navigate = useNavigate();
 

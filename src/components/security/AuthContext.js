@@ -1,14 +1,12 @@
 import { createContext, useState, useEffect } from 'react';
 import axios from "axios";
-import {API_BASE_URL, DEFAULT_PROFILE_IMAGE} from "../../config/config";
+import {API_BASE_URL} from "../../config/config";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [userInfo, setUserInfo] = useState({
-        profileImage: "/assets/images/avatar/placeholder.jpg"
-    });
+    const [userInfo, setUserInfo] = useState([]);
 
 
     useEffect(() => {
@@ -57,11 +55,7 @@ export const AuthProvider = ({ children }) => {
             const response = await axios.get(`${API_BASE_URL}/api/userInfo`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
-
             const userProfile = response.data;
-            if (!userProfile.profileImage) {
-                userProfile.profileImage = DEFAULT_PROFILE_IMAGE;
-            }
             setUserInfo(userProfile);
 
         } catch (error) {

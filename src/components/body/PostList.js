@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import {API_BASE_URL, LIMIT, OFFSET} from "../../config/config";
 import InfiniteScroll from 'react-infinite-scroll-component';
+import AuthContext from "../security/AuthContext";
 
 
 
@@ -12,6 +13,7 @@ const PostList = () => {
     const [posts, setPosts] = useState([]);
     const [isLastPost, setIsLastPost] = useState(false);
     const navigate = useNavigate();
+    const { userInfo } = useContext(AuthContext);
 
 
     const fetchPosts = async () => {
@@ -19,30 +21,13 @@ const PostList = () => {
             const response = await axios.get(`${API_BASE_URL}/api/posts?offset=${offset}&limit=${limit}`);
             const postsData = response.data;
 
-            console.log(postsData);
 
             // 마지막 포스트 여부를 판단
             if (postsData.length < limit) {
                 setIsLastPost(true);
             }
 
-            const fetchCommentCounts = async () => {
-                const commentCountPromises = postsData.map(async (post) => {
-                    const commentResponse = await axios.get(`${API_BASE_URL}/api/comments/count/${post.id}`);
-                    return commentResponse.data;
-                });
-
-                const commentCounts = await Promise.all(commentCountPromises);
-                return commentCounts
-            }
-
-            const commentCounts = await fetchCommentCounts();
-
-            const postsWithCommentCounts = postsData.map((post, index) => {
-                return { ...post, commentCount: commentCounts[index] };
-            });
-
-            setPosts([...posts, ...postsWithCommentCounts]);
+            setPosts([...posts, ...postsData]);
             setOffset(offset + limit);
         } catch (error) {
             console.error('Error fetching posts:', error);
@@ -100,11 +85,13 @@ const PostList = () => {
                                 <p className="mb-0 small" style={{textAlign: 'left'}}>{post.nickname}</p>
                             </div>
                         </div>
-                        <div>
-                            <button type="submit" className="btn btn-danger-soft" onClick={() => handleEdit(post)}>
-                                수정/삭제
-                            </button>
-                        </div>
+                        {userInfo.username === post.username && (
+                            <div>
+                                <button type="submit" className="btn btn-danger-soft" onClick={() => handleEdit(post)}>
+                                    수정/삭제
+                                </button>
+                            </div>
+                        )}
                     </div>
                     {/* Card header END */}
                     {/* Card body START */}

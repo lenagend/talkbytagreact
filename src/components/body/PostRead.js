@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import React, {useContext, useEffect, useState} from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import {API_BASE_URL} from "../../config/config";
 import CommentContainer from "./CommentContainer";
+import AuthContext from "../security/AuthContext";
 
 
 const PostRead = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const location = useLocation();
+    const { userInfo } = useContext(AuthContext);
 
     const [post, setPost] = useState([]);
     const [commentCounts, setCommentCounts] = useState(0)
@@ -50,7 +51,7 @@ const PostRead = () => {
                         {/* Avatar */}
                         <div className="avatar avatar-story me-2">
                             <a href="#!">
-                                <img className="avatar-img rounded-circle" src="/assets/images/avatar/04.jpg" alt="" />
+                                <img className="avatar-img rounded-circle" src={post.profileImage} alt="" />
                             </a>
                         </div>
                         {/* Info */}
@@ -63,14 +64,16 @@ const PostRead = () => {
                                 </h6>
                                 <span className="nav-item small">{new Date(post.createdAt).toLocaleString()}</span>
                             </div>
-                            <p className="mb-0 small" style={{textAlign: 'left'}}>{post.authorId}</p>
+                            <p className="mb-0 small" style={{textAlign: 'left'}}>{post.nickname}</p>
                         </div>
                     </div>
-                    <div>
-                        <button type="submit" className="btn btn-danger-soft" onClick={() => handleEdit(post)}>
-                            수정/삭제
-                        </button>
-                    </div>
+                    {userInfo.username === post.username && (
+                        <div>
+                            <button type="submit" className="btn btn-danger-soft" onClick={() => handleEdit(post)}>
+                                수정/삭제
+                            </button>
+                        </div>
+                    )}
                 </div>
                 {/* Card header END */}
                 {/* Card body START */}

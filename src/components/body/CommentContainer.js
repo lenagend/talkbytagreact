@@ -3,13 +3,13 @@ import {API_BASE_URL, LIMIT, OFFSET} from "../../config/config";
 import axios from "axios";
 import Comment from "./Comment";
 import AuthContext from "../security/AuthContext";
-import {Navigate, useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 const CommentContainer = ({postId, setCommentCounts}) => {
     const [contents, setContents] = useState('');
     const [comments, setComments] = useState([]);
-    const { isAuthenticated ,userInfo, fetchUserInfo } = useContext(AuthContext);
+    const { isAuthenticated ,userInfo } = useContext(AuthContext);
     const navigate = useNavigate();
 
 
@@ -37,8 +37,7 @@ const CommentContainer = ({postId, setCommentCounts}) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const response = await axios.post(`${API_BASE_URL}/api/comments`, { contents: contents, postId: postId });
-            console.log('Comment posted:', response.data);
+            const response = await axios.post(`${API_BASE_URL}/api/comments`, { contents: contents, postId: postId, username: userInfo.username });
             setCommentCounts();
             fetchComments();
             setContents('');
@@ -57,7 +56,7 @@ const CommentContainer = ({postId, setCommentCounts}) => {
             {isAuthenticated ? (
                 <div className="d-flex mb-3">
                     <div className="avatar avatar-xs me-2">
-                        <a href="#!"> <img className="avatar-img rounded-circle" src="/assets/images/avatar/12.jpg"
+                        <a href="#!"> <img className="avatar-img rounded-circle" src={userInfo.profileImage}
                                            alt=""/> </a>
                     </div>
                     <form className="nav nav-item w-100 position-relative" onSubmit={handleSubmit}>
