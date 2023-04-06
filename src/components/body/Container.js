@@ -43,7 +43,7 @@ const Container = ( { page, post} ) => {
         <main>
             <div className="container">
                 <div className="row g-4">
-                    {page === 'home' && isAuthenticated &&  <LeftSidebar />}
+                    {isAuthenticated &&  <LeftSidebar />}
                     <div className="col-md-8 col-lg-6 vstack gap-4">{renderContent()}</div>
                     <div className="col-lg-3"><RightSidebar /></div>
                 </div>

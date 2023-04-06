@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 const CommentContainer = ({postId, setCommentCounts}) => {
     const [contents, setContents] = useState('');
     const [comments, setComments] = useState([]);
-    const { isAuthenticated ,userInfo } = useContext(AuthContext);
+    const { isAuthenticated ,userInfo, fetchUserInfo } = useContext(AuthContext);
     const navigate = useNavigate();
 
 
@@ -41,6 +41,7 @@ const CommentContainer = ({postId, setCommentCounts}) => {
             setCommentCounts();
             fetchComments();
             setContents('');
+            fetchUserInfo();
         } catch (error) {
             console.error('Error posting comment:', error);
         }

@@ -14,7 +14,7 @@ const LeftSidebar = () => {
                     </button>
                 </div>
 
-                <nav class="navbar navbar-expand-lg mx-0">
+                <nav class="navbar navbar-expand-lg mx-0 ">
                     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasSideNavbar">
                         <div class="offcanvas-header">
                             <button type="button" class="btn-close text-reset ms-auto" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -39,12 +39,12 @@ const LeftSidebar = () => {
                                         <p class="mt-3">{userInfo && userInfo.modifiedAt ? '환영합니다~!' : '아래의 설정버튼을 눌러 프로필을 만들어 보세요!'}</p>
                                         <div class="hstack gap-2 gap-xl-3 justify-content-center">
                                             <div>
-                                                <h6 class="mb-0">{userInfo ? userInfo.postCount : 0}</h6>
+                                                <h6 class="mb-0">{userInfo.postCount}</h6>
                                                 <small>포스트</small>
                                             </div>
                                             <div class="vr"></div>
                                             <div>
-                                                <h6 class="mb-0">0</h6>
+                                                <h6 class="mb-0">{userInfo.commentCount}</h6>
                                                 <small>댓글</small>
                                             </div>
                                             <div class="vr"></div>

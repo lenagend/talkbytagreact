@@ -53,6 +53,7 @@ function PostSubmit( {post} ) {
             const publishedValue = e.target.name === "delete" ? false : true;
             axios.put(`${API_BASE_URL}/api/posts/${post.id}`, {contents : contents,  published: publishedValue, hashTag: updatedHashTag})
                 .then(() => {
+                    fetchUserInfo();
                     navigate('/');
                 })
                 .catch((err) => console.log(err));
