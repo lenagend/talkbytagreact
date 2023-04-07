@@ -58,7 +58,7 @@ const LeftSidebar = () => {
                                         <ul class="nav nav-link-secondary flex-column fw-bold gap-2">
 
                                             <li class="nav-item">
-                                                <a class="nav-link" href="settings.html"> <img class="me-2 h-20px fa-fw" src="/assets/images/icon/cog-outline-filled.svg" alt="" /><span>Settings </span></a>
+                                                <a class="nav-link" href="settings.html"> <img class="me-2 h-20px fa-fw" src="/assets/images/icon/cog-outline-filled.svg" alt="" /><span>설정 </span></a>
                                             </li>
                                         </ul>
                                 </div>

@@ -17,7 +17,7 @@ function PostSubmit( {post} ) {
         setContents(contents);
 
         // 해시태그를 찾기 위한 정규식
-        const hashTagRegex = /(@[\wㄱ-ㅎㅏ-ㅣ가-힣]+)/g;
+        const hashTagRegex = /(#[\wㄱ-ㅎㅏ-ㅣ가-힣]+)/g;
 
         // 해시태그를 포함한 HTML을 텍스트로 변환
         const parser = new DOMParser();
@@ -27,20 +27,18 @@ function PostSubmit( {post} ) {
         const inputHashTags = textContent.match(hashTagRegex);
 
         if (inputHashTags) {
-            let modifiedContents = contents;
-            inputHashTags.forEach((tag) => {
-                const tagWithBlueFont = `<span style="color:#008EE2; font-weight: bold">${tag}</span>`;
-                modifiedContents = modifiedContents.replace(tag, tagWithBlueFont);
-            });
-            setContents(modifiedContents);
+            // 입력한 해시태그를 공백으로 구분된 문자열로 저장
             setHashTag(inputHashTags.join(' '));
+        } else {
+            // 해시태그가 없는 경우 hashTag를 빈 문자열로 설정
+            setHashTag('');
         }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const updatedHashTag = hashTag || "@freeTalk";
+        const updatedHashTag = hashTag || "#잡담";
 
         if(!post){
             axios.post(`${API_BASE_URL}/api/posts`, { contents: contents, hashTag : updatedHashTag, username : userInfo.username })
