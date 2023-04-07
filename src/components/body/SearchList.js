@@ -95,7 +95,7 @@ const SearchList = () => {
                             {/* Avatar */}
                             <div className="avatar avatar-story me-2">
                                 <a href="#!">
-                                    <img className="avatar-img rounded-circle" src="/assets/images/avatar/04.jpg" alt="" />
+                                    <img className="avatar-img rounded-circle" src={post.profileImage} alt="" />
                                 </a>
                             </div>
                             {/* Info */}
@@ -108,7 +108,7 @@ const SearchList = () => {
                                     </h6>
                                     <span className="nav-item small">{new Date(post.createdAt).toLocaleString()}</span>
                                 </div>
-                                <p className="mb-0 small" style={{textAlign: 'left'}}>{post.authorId}</p>
+                                <p className="mb-0 small" style={{textAlign: 'left'}}>{post.nickname}</p>
                             </div>
                         </div>
                         <div>

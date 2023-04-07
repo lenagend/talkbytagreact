@@ -111,6 +111,7 @@ function PostSubmit( {post} ) {
                             value={contents}
                             onChange={handleEditorChange}
                             modules={modules}
+                                    placeholder="#로 시작하는 해쉬태그를 포함해 보세요! 여러개의 해쉬태그 또한 가능합니다."
                         />
                     </div>
                     <ul className="nav nav-pills nav-stack small fw-normal">
