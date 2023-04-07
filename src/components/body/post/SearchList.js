@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams} from 'react-router-dom';
 import axios from 'axios';
-import {API_BASE_URL, LIMIT, OFFSET} from "../../config/config";
+import {API_BASE_URL, LIMIT, OFFSET} from "../../../config/config";
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 

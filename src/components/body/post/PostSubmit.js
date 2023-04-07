@@ -1,10 +1,10 @@
 import React, {useState, useRef, useCallback, useContext} from 'react';
 import axios from "axios";
-import {API_BASE_URL} from "../../config/config";
+import {API_BASE_URL} from "../../../config/config";
 import {useNavigate} from "react-router-dom";
 import ReactQuill, { Quill } from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import AuthContext from "../security/AuthContext";
+import AuthContext from "../../security/AuthContext";
 
 function PostSubmit( {post} ) {
     const [contents, setContents] = useState(post?.contents || '');
@@ -72,7 +72,7 @@ function PostSubmit( {post} ) {
             formData.append('file', file);
 
             try {
-                const response = await axios.post(`${API_BASE_URL}/api/posts/upload-image`, formData, {
+                const response = await axios.post(`${API_BASE_URL}/api/upload-image`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                     },

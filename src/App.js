@@ -8,6 +8,7 @@ import Login from "./components/page/Login";
 import PrivateRoute from "./components/security/PrivateRoute";
 import SignUp from "./components/page/SignUp";
 import {AuthProvider} from "./components/security/AuthContext";
+import Settings from "./components/page/Settings";
 
 function App() {
 
@@ -22,6 +23,9 @@ function App() {
                     <Route path="/signup" element={<SignUp />}/>
                     <Route exact path='/submit' element={<PrivateRoute originPath ="/submit"/>}>
                         <Route index element={<Submit />} />
+                    </Route>
+                    <Route exact path='/settings' element={<PrivateRoute originPath ="/settings"/>}>
+                        <Route index element={<Settings />} />
                     </Route>
                 </Routes>
             </BrowserRouter>

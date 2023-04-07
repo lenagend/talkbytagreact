@@ -1,9 +1,9 @@
 import React, {useContext, useEffect, useState} from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-import {API_BASE_URL} from "../../config/config";
+import {API_BASE_URL} from "../../../config/config";
 import CommentContainer from "./CommentContainer";
-import AuthContext from "../security/AuthContext";
+import AuthContext from "../../security/AuthContext";
 
 
 const PostRead = () => {

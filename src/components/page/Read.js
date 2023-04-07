@@ -1,10 +1,8 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Header from "../header/Header";
 import Container from "../body/Container";
-import { useLocation } from 'react-router-dom';
 
-
-function Read() {
+const Read = () => {
 
     return (
         <div className="App">

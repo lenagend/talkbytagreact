@@ -1,9 +1,9 @@
 import React, {useContext, useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import {API_BASE_URL, LIMIT, OFFSET} from "../../config/config";
+import {API_BASE_URL, LIMIT, OFFSET} from "../../../config/config";
 import InfiniteScroll from 'react-infinite-scroll-component';
-import AuthContext from "../security/AuthContext";
+import AuthContext from "../../security/AuthContext";
 
 
 

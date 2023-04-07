@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import LoginSubmit from "../body/LoginSubmit";
-import SignUpSubmit from "../body/SignUpSubmit";
+import LoginSubmit from "../body/login/LoginSubmit";
+import SignUpSubmit from "../body/login/SignUpSubmit";
 import Header from "../header/Header";
 
 

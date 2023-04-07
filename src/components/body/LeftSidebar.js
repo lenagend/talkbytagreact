@@ -1,7 +1,8 @@
 import {useContext} from "react";
 import AuthContext from "../security/AuthContext";
+import {Link} from "react-router-dom";
 
-const LeftSidebar = () => {
+const LeftSidebar = ({selectedTab, setSelectedTab }) => {
     const { userInfo } = useContext(AuthContext);
     const profileImageSrc = userInfo.profileImage;
 
@@ -58,7 +59,7 @@ const LeftSidebar = () => {
                                         <ul class="nav nav-link-secondary flex-column fw-bold gap-2">
 
                                             <li class="nav-item">
-                                                <a class="nav-link" href="settings.html"> <img class="me-2 h-20px fa-fw" src="/assets/images/icon/cog-outline-filled.svg" alt="" /><span>설정 </span></a>
+                                                <Link class="nav-link" to="/settings"> <img class="me-2 h-20px fa-fw" src="/assets/images/icon/cog-outline-filled.svg" alt="" /><span>설정 </span></Link>
                                             </li>
                                         </ul>
                                 </div>
