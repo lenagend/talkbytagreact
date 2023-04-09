@@ -1,30 +1,14 @@
 import AuthContext from "../../security/AuthContext";
 import React, {useContext, useCallback, useState} from "react";
 import { useDropzone } from 'react-dropzone';
+import axios from "axios";
+import {API_BASE_URL} from "../../../config/config";
+import MyDropzone from "../../tools/MyDropzone";
 
 
 const AccountSettings = () => {
     const { userInfo } = useContext(AuthContext);
     const { nickname, setNickname } = useState('');
-
-    const MyDropzone = () => {
-        const onDrop = useCallback((acceptedFiles) => {
-            // 이미지 업로드를 처리하는 함수를 여기에 추가하세요.
-            console.log(acceptedFiles);
-        }, []);
-
-        const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
-
-        return (
-            <div {...getRootProps()} className="dropzone dropzone-default card shadow-none">
-                <input {...getInputProps()} />
-                <div className="dz-message">
-                    <i className="bi bi-images display-3"></i>
-                    <p>{isDragActive ? "드롭하여 업로드" : "드래그하거나 클릭해서 업로드하세요."}</p>
-                </div>
-            </div>
-        );
-    };
 
     const handleNicknameChange = (e) => {
 
@@ -100,19 +84,6 @@ const AccountSettings = () => {
                             </form>
                         </div>
                     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                     <div className="modal fade" id="feedActionPhoto" tabIndex="-1"
                          aria-labelledby="feedActionPhotoLabel" aria-hidden="true">
