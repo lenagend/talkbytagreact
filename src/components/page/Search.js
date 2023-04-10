@@ -2,8 +2,7 @@ import React from 'react';
 import Header from "../header/Header";
 import Container from "../body/Container";
 
-class Home extends React.Component {
-    render() {
+const Search = () => {
         return (
             <div className="App">
                 <Header />
@@ -11,6 +10,4 @@ class Home extends React.Component {
             </div>
         );
     }
-}
-
-export default Home;
+export default Search;

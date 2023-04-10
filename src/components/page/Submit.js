@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom';
 
 function Submit() {
     const location = useLocation();
-    const [post, setPost] = useState(location.state?.post || null);
+    const [post] = useState(location.state?.post || null);
 
     return (
         <div className="App">

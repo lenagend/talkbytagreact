@@ -17,11 +17,6 @@ import CloseAccount from "./settings/CloseAccount";
 const Container = ( { page, post, selectedTab, setSelectedTab} ) => {
     const { isAuthenticated } = useContext(AuthContext);
 
-    useEffect(() => {
-        console.log(selectedTab);
-    }, [selectedTab]);
-
-
     const renderContent = () => {
         switch (page) {
             case 'home':

@@ -13,10 +13,12 @@ const SearchList = () => {
     const [isLastPost, setIsLastPost] = useState(false);
     const navigate = useNavigate();
     const { q } = useParams();
+    const decodedSearchQuery = decodeURIComponent(q);
 
     const fetchPosts = async (newOffset) => {
         try {
-            const response = await axios.get(`${API_BASE_URL}/api/posts/search?q=${q}&offset=${newOffset}&limit=${limit}`);
+            const encodedSearchQuery = encodeURIComponent(decodedSearchQuery);
+            const response = await axios.get(`${API_BASE_URL}/api/posts/search?q=${encodedSearchQuery}&offset=${newOffset}&limit=${limit}`);
             const postsData = response.data;
 
             // 마지막 포스트 여부를 판단

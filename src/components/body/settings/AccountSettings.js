@@ -9,13 +9,36 @@ import MyDropzone from "../../tools/MyDropzone";
 const AccountSettings = () => {
     const { userInfo } = useContext(AuthContext);
     const { nickname, setNickname } = useState('');
+    const [uploadedImage, setUploadedImage] = useState(null); //
 
     const handleNicknameChange = (e) => {
 
     }
 
-    const handleSubmit = (e) => {
+    const handleImageUpload = (file) => {
+        setUploadedImage(file);
+    }
+
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if(uploadedImage){
+            const formData = new FormData();
+            formData.append('file', uploadedImage);
+
+            try {
+                const response = await axios.post(`${API_BASE_URL}/api/upload-image`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
+
+                console.log(response.data);
+            } catch (error) {
+                console.error(error);
+            }
+        }
 
     }
 
@@ -43,6 +66,10 @@ const AccountSettings = () => {
                                             <a className="nav-link bg-light py-1 px-2 mb-0" href="#!" data-bs-toggle="modal"
                                                data-bs-target="#feedActionPhoto"> <i
                                                 className="bi bi-image-fill text-success pe-2"></i>업로드</a>
+                                        </li>
+                                        <li className="nav-item">
+                                            {uploadedImage && <span className="badge bg-success">이미지를 불러온 상태입니다 ✓</span>}
+
                                         </li>
                                     </ul>
                                 </div>
@@ -98,16 +125,19 @@ const AccountSettings = () => {
                                 <div className="modal-body">
                                     <div>
                                         <label className="form-label">업로드 된 이미지</label>
-                                      <MyDropzone />
+                                      <MyDropzone onImageupload={handleImageUpload}
+                                                  uploadedImage={uploadedImage}
+                                                  setUploadedImage={setUploadedImage}
+                                      />
                                     </div>
 
                                 </div>
 
                                 <div className="modal-footer ">
                                     <button type="button" className="btn btn-danger-soft me-2"
-                                            data-bs-dismiss="modal">Cancel
+                                            data-bs-dismiss="modal"  onClick={() => setUploadedImage(null)}>취소
                                     </button>
-                                    <button type="button" className="btn btn-success-soft">Post</button>
+                                    <button type="submit" className="btn btn-success-soft" data-bs-dismiss="modal">확인</button>
                                 </div>
                             </div>
                         </div>

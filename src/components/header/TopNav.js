@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext } from 'react';
 import NavSearch from "./NavSearch";
 import NavRight from "./NavRight";
 import {useNavigate} from "react-router-dom";

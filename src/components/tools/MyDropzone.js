@@ -1,37 +1,30 @@
-import React, {useCallback, useState} from "react";
-import axios from "axios";
-import {API_BASE_URL} from "../../config/config";
+import React, {useCallback, useEffect, useState} from "react";
 import {useDropzone} from "react-dropzone";
 
-const MyDropzone = () => {
-
+const MyDropzone = ({ onImageUpload, uploadedImage, setUploadedImage }) => {
     const [imagePreviewUrl, setImagePreviewUrl] = useState('');
-    const [uploadedImage, setUploadedImage] = useState(null);
 
-    const onDrop = useCallback(async (acceptedFiles) => {
-        const file = acceptedFiles[0];
-        setUploadedImage(file);
-        setImagePreviewUrl(URL.createObjectURL(file));
-
-        // 서버에 이미지 업로드
-        const formData = new FormData();
-        formData.append('file', file);
-
-        try {
-            const response = await axios.post(`${API_BASE_URL}/api/upload-image`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            });
-
-            console.log(response.data);
-        } catch (error) {
-            console.error(error);
+    useEffect(() => {
+        if (uploadedImage) {
+            const previewUrl = URL.createObjectURL(uploadedImage);
+            setImagePreviewUrl(previewUrl);
+        } else {
+            setImagePreviewUrl(null);
         }
+    }, [uploadedImage]);
 
-    }, []);
+    const onDrop = useCallback(
+        (acceptedFiles) => {
+            const file = acceptedFiles[0];
+            setUploadedImage(file);
+            onImageUpload(file);
+        },
+        [onImageUpload, setUploadedImage]
+    );
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+
+
 
     return (
         <div {...getRootProps()} className="dropzone dropzone-default card shadow-none">

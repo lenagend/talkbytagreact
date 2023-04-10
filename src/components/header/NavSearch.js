@@ -13,7 +13,8 @@ const NavSearch = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        navigate(`/search/${contents}`);
+        const searchQuery = encodeURIComponent(contents);
+        navigate(`/search/${searchQuery}`);
     }
 
         return (
