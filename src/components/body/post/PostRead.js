@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-import {API_BASE_URL} from "../../../config/config";
+import {API_BASE_URL, IMAGE_SERVER_BASE_URL} from "../../../config/config";
 import CommentContainer from "./CommentContainer";
 import AuthContext from "../../security/AuthContext";
 
@@ -51,7 +51,7 @@ const PostRead = () => {
                         {/* Avatar */}
                         <div className="avatar avatar-story me-2">
                             <a href="#!">
-                                <img className="avatar-img rounded-circle" src={post.profileImage} alt="" />
+                                <img className="avatar-img rounded-circle" src={`${IMAGE_SERVER_BASE_URL}${post.profileImage}`} alt="" />
                             </a>
                         </div>
                         {/* Info */}

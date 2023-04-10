@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import {API_BASE_URL, LIMIT, OFFSET} from "../../../config/config";
+import {API_BASE_URL, IMAGE_SERVER_BASE_URL, LIMIT, OFFSET} from "../../../config/config";
 import axios from "axios";
 import Comment from "./Comment";
 import AuthContext from "../../security/AuthContext";
@@ -11,6 +11,7 @@ const CommentContainer = ({postId, setCommentCounts}) => {
     const [comments, setComments] = useState([]);
     const { isAuthenticated ,userInfo, fetchUserInfo } = useContext(AuthContext);
     const navigate = useNavigate();
+    const profileImageSrc = `${IMAGE_SERVER_BASE_URL}${userInfo.profileImage}`;
 
 
     useEffect(() => {
@@ -57,7 +58,7 @@ const CommentContainer = ({postId, setCommentCounts}) => {
             {isAuthenticated ? (
                 <div className="d-flex mb-3">
                     <div className="avatar avatar-xs me-2">
-                        <a href="#!"> <img className="avatar-img rounded-circle" src={userInfo.profileImage}
+                        <a href="#!"> <img className="avatar-img rounded-circle" src={profileImageSrc}
                                            alt=""/> </a>
                     </div>
                     <form className="nav nav-item w-100 position-relative" onSubmit={handleSubmit}>

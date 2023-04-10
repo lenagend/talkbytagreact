@@ -1,15 +1,15 @@
 import React, {useContext, useEffect, useState} from "react";
-import {API_BASE_URL, LIMIT, OFFSET} from "../../../config/config";
+import {API_BASE_URL, IMAGE_SERVER_BASE_URL, LIMIT, OFFSET} from "../../../config/config";
 import axios from "axios";
 import AuthContext from "../../security/AuthContext";
 
 const Comment = ({ comment, setCommentCounts }) => {
     const [showReplyForm, setShowReplyForm] = useState(false);
     const [contents, setContents] = useState('');
-
     const [replies, setReplies] = useState([]);
-
     const { userInfo, fetchUserInfo } = useContext(AuthContext);
+    const profileImageSrc = `${IMAGE_SERVER_BASE_URL}${userInfo.profileImage}`;
+
 
     useEffect(() => {
         fetchReplies();
@@ -56,7 +56,7 @@ const Comment = ({ comment, setCommentCounts }) => {
         <li className="comment-item">
             <div className="d-flex position-relative">
                 <div className="avatar avatar-xs">
-                    <a href="#!"><img className="avatar-img rounded-circle" src={comment.profileImage}
+                    <a href="#!"><img className="avatar-img rounded-circle" src={`${IMAGE_SERVER_BASE_URL}${comment.profileImage}`}
                                       alt=""/></a>
                 </div>
                 <div className="ms-2">
@@ -80,7 +80,7 @@ const Comment = ({ comment, setCommentCounts }) => {
             {showReplyForm && (
             <div class="d-flex mb-3">
                 <div className="avatar avatar-xs me-2">
-                    <a href="#!"> <img className="avatar-img rounded-circle" src={userInfo.profileImage} alt=""/> </a>
+                    <a href="#!"> <img className="avatar-img rounded-circle" src={profileImageSrc} alt=""/> </a>
                 </div>
                 <form className="nav nav-item w-100 position-relative" onSubmit={handleSubmit}>
                 <textarea data-autoresize className="form-control pe-5 bg-light" rows="1" id="contents" name="contents" value={contents}

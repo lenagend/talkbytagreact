@@ -1,10 +1,10 @@
 import React, {useContext} from 'react';
 import AuthContext from "../security/AuthContext";
-import {DEFAULT_PROFILE_IMAGE} from "../../config/config";
+import {DEFAULT_PROFILE_IMAGE, IMAGE_SERVER_BASE_URL} from "../../config/config";
 
 const NavRight = () => {
     const { logout, userInfo } = useContext(AuthContext);
-    const profileImageSrc = userInfo.profileImage;
+    const profileImageSrc = `${IMAGE_SERVER_BASE_URL}${userInfo.profileImage}`;
 
     const handleLogout = () => {
         logout();

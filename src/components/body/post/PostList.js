@@ -14,7 +14,6 @@ const PostList = () => {
     const [isLastPost, setIsLastPost] = useState(false);
     const navigate = useNavigate();
     const { userInfo } = useContext(AuthContext);
-    const profileImageSrc = userInfo && userInfo.profileImage ?`${IMAGE_SERVER_BASE_URL}${userInfo.profileImage}` : `${IMAGE_SERVER_BASE_URL}/assets/images/avatar/placeholder.jpg`;
 
     const fetchPosts = async () => {
         try {

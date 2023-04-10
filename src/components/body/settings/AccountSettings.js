@@ -7,13 +7,15 @@ import MyDropzone from "../../tools/MyDropzone";
 
 
 const AccountSettings = () => {
-    const { userInfo } = useContext(AuthContext);
+    const { userInfo, fetchUserInfo } = useContext(AuthContext);
     const [nickname, setNickname] = useState(userInfo.nickname);
     const [profileImage, setProfileImage] = useState(userInfo.profileImage);
-    const [uploadedImage, setUploadedImage] = useState(null); //
+    const [uploadedImage, setUploadedImage] = useState(null);
+    const [updateError, setUpdateError] = useState('');
+    const [updateSuccess, setUpdateSuccess] = useState(false);
 
     const handleNicknameChange = (e) => {
-
+        setNickname(e.target.value)
     }
 
     const handleImageUpload = (file) => {
@@ -23,6 +25,9 @@ const AccountSettings = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        let updatedProfileImage = profileImage;
+
 
         if(uploadedImage){
             const formData = new FormData();
@@ -34,8 +39,12 @@ const AccountSettings = () => {
                         'Content-Type': 'multipart/form-data',
                     },
                 });
-                setProfileImage(response.data);
+                updatedProfileImage = response.data.location;
             } catch (error) {
+                setUpdateError(true);
+                setTimeout(() => {
+                    setUpdateError(false);
+                }, 3000);
                 console.error(error);
             }
         }
@@ -43,17 +52,29 @@ const AccountSettings = () => {
         try {
             const updatedUserInfo = {
                 nickname,
-                profileImage,
+                profileImage: updatedProfileImage,
             };
-
+            const token = localStorage.getItem('token');
             const response = await axios.put(`${API_BASE_URL}/api/userInfo`, updatedUserInfo, {
                 headers: {
-                    Authorization: `Bearer ${userInfo.token}`,
+                    Authorization: `Bearer ${token}`,
                 },
             });
-
+            fetchUserInfo();
+            setUpdateSuccess(true);
+            setTimeout(() => {
+                setUpdateSuccess(false);
+            }, 3000);
             console.log(response.data);
         } catch (error) {
+            if (error.response.status === 409) {
+                setUpdateError("중복된 닉네임이 존재합니다.");
+            } else {
+                setUpdateError("에러");
+            }
+            setTimeout(() => {
+                setUpdateError('');
+            }, 3000);
             console.error(error);
         }
 
@@ -61,6 +82,17 @@ const AccountSettings = () => {
 
     return(
                 <div class="tab-pane active"  style={{textAlign : 'left'}}>
+                    {updateSuccess && (
+                        <div className="alert alert-success" role="alert">
+                            사용자 정보 변경이 <strong>완료되었습니다</strong>
+
+                        </div>
+                    )}
+                    {updateError && (
+                        <div className="alert alert-warning" role="alert">
+                            <strong>정보변경 실패!</strong> {updateError}
+                        </div>
+                    )}
                     <div class="card mb-4">
                         <div class="card-header border-0 pb-0">
                             <h1 class="h5 card-title">사용자 정보 변경</h1>
@@ -74,7 +106,7 @@ const AccountSettings = () => {
                                 </div>
                                 <div class="col-sm-6">
                                     <label class="form-label">닉네임 </label>
-                                    <input type="text" class="form-control" value={userInfo.nickname} onChange={handleNicknameChange}/>
+                                    <input type="text" class="form-control" value={nickname} onChange={handleNicknameChange}/>
                                 </div>
                                 <div className="col-sm-6">
                                     <label className="form-label">프로필사진 </label>
@@ -91,7 +123,7 @@ const AccountSettings = () => {
                                     </ul>
                                 </div>
                                 <div class="col-12 text-end">
-                                    <button type="submit" class="btn btn-sm btn-primary mb-0">Save changes</button>
+                                    <button type="submit" class="btn btn-sm btn-primary mb-0">변경사항 저장</button>
                                 </div>
                             </form>
                         </div>
@@ -123,7 +155,7 @@ const AccountSettings = () => {
                                     <input type="text" class="form-control" />
                                 </div>
                                 <div class="col-12 text-end">
-                                    <button type="submit" class="btn btn-primary mb-0">Update password</button>
+                                    <button type="submit" class="btn btn-primary mb-0">비밀번호 변경</button>
                                 </div>
                             </form>
                         </div>
