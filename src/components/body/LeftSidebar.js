@@ -1,10 +1,11 @@
 import {useContext} from "react";
 import AuthContext from "../security/AuthContext";
 import {Link} from "react-router-dom";
+import { IMAGE_SERVER_BASE_URL} from "../../config/config";
 
 const LeftSidebar = ({selectedTab, setSelectedTab }) => {
     const { userInfo } = useContext(AuthContext);
-    const profileImageSrc = userInfo.profileImage;
+    const profileImageSrc = `${IMAGE_SERVER_BASE_URL}${userInfo.profileImage}`;
 
         return(
             <div class="col-lg-3">

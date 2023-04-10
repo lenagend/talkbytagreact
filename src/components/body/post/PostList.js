@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import {API_BASE_URL, LIMIT, OFFSET} from "../../../config/config";
+import {API_BASE_URL, IMAGE_SERVER_BASE_URL, LIMIT, OFFSET} from "../../../config/config";
 import InfiniteScroll from 'react-infinite-scroll-component';
 import AuthContext from "../../security/AuthContext";
 
@@ -14,7 +14,7 @@ const PostList = () => {
     const [isLastPost, setIsLastPost] = useState(false);
     const navigate = useNavigate();
     const { userInfo } = useContext(AuthContext);
-
+    const profileImageSrc = userInfo && userInfo.profileImage ?`${IMAGE_SERVER_BASE_URL}${userInfo.profileImage}` : `${IMAGE_SERVER_BASE_URL}/assets/images/avatar/placeholder.jpg`;
 
     const fetchPosts = async () => {
         try {
@@ -69,7 +69,7 @@ const PostList = () => {
                             {/* Avatar */}
                             <div className="avatar avatar-story me-2">
                                 <a href="#!">
-                                    <img className="avatar-img rounded-circle" src={post.profileImage} alt="" />
+                                    <img className="avatar-img rounded-circle" src={`${IMAGE_SERVER_BASE_URL}${post.profileImage}`} alt="" />
                                 </a>
                             </div>
                             {/* Info */}

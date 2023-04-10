@@ -1,10 +1,11 @@
 import React, {useContext} from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../security/AuthContext";
+import {API_BASE_URL, IMAGE_SERVER_BASE_URL} from "../../config/config";
 
 function HomeSubmit(){
     const { userInfo } = useContext(AuthContext);
-    const profileImageSrc = userInfo && userInfo.profileImage ? userInfo.profileImage : "/assets/images/avatar/placeholder.jpg";
+    const profileImageSrc = userInfo && userInfo.profileImage ?`${IMAGE_SERVER_BASE_URL}${userInfo.profileImage}` : `${IMAGE_SERVER_BASE_URL}/assets/images/avatar/placeholder.jpg`;
 
     const navigate = useNavigate();
 

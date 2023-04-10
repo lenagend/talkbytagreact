@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams} from 'react-router-dom';
 import axios from 'axios';
-import {API_BASE_URL, LIMIT, OFFSET} from "../../../config/config";
+import {API_BASE_URL, IMAGE_SERVER_BASE_URL, LIMIT, OFFSET} from "../../../config/config";
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 
@@ -14,6 +14,7 @@ const SearchList = () => {
     const navigate = useNavigate();
     const { q } = useParams();
     const decodedSearchQuery = decodeURIComponent(q);
+
 
     const fetchPosts = async (newOffset) => {
         try {
@@ -97,7 +98,7 @@ const SearchList = () => {
                             {/* Avatar */}
                             <div className="avatar avatar-story me-2">
                                 <a href="#!">
-                                    <img className="avatar-img rounded-circle" src={post.profileImage} alt="" />
+                                    <img className="avatar-img rounded-circle" src={`${IMAGE_SERVER_BASE_URL}${post.profileImage}`} alt="" />
                                 </a>
                             </div>
                             {/* Info */}

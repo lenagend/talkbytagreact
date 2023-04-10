@@ -8,7 +8,8 @@ import MyDropzone from "../../tools/MyDropzone";
 
 const AccountSettings = () => {
     const { userInfo } = useContext(AuthContext);
-    const { nickname, setNickname } = useState('');
+    const [nickname, setNickname] = useState(userInfo.nickname);
+    const [profileImage, setProfileImage] = useState(userInfo.profileImage);
     const [uploadedImage, setUploadedImage] = useState(null); //
 
     const handleNicknameChange = (e) => {
@@ -33,11 +34,27 @@ const AccountSettings = () => {
                         'Content-Type': 'multipart/form-data',
                     },
                 });
-
-                console.log(response.data);
+                setProfileImage(response.data);
             } catch (error) {
                 console.error(error);
             }
+        }
+
+        try {
+            const updatedUserInfo = {
+                nickname,
+                profileImage,
+            };
+
+            const response = await axios.put(`${API_BASE_URL}/api/userInfo`, updatedUserInfo, {
+                headers: {
+                    Authorization: `Bearer ${userInfo.token}`,
+                },
+            });
+
+            console.log(response.data);
+        } catch (error) {
+            console.error(error);
         }
 
     }
