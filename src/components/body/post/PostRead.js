@@ -4,6 +4,7 @@ import axios from 'axios';
 import {API_BASE_URL, IMAGE_SERVER_BASE_URL} from "../../../config/config";
 import CommentContainer from "./CommentContainer";
 import AuthContext from "../../security/AuthContext";
+import LikeButton from "./LikeButton";
 
 
 const PostRead = () => {
@@ -81,13 +82,11 @@ const PostRead = () => {
                     <p dangerouslySetInnerHTML={{ __html: post.contents }}></p>
                     <ul className="nav nav-stack py-3 small">
                         <li className="nav-item">
-                            <a className="nav-link active"  href="#!" >
-                                <i className="bi bi-hand-thumbs-up-fill pe-1"></i>Liked (<span>{post.viewCount}</span>)
-                            </a>
+                            <LikeButton id={post.id} isPost={true} />
                         </li>
                         <li className="nav-item">
                             <a className="nav-link" href="#!">
-                                <i className="bi bi-chat-fill pe-1"></i>Comments (<span>{commentCounts}</span>)
+                                <i className="bi bi-chat-fill pe-1"></i>댓글 (<span>{commentCounts}</span>)
                             </a>
                         </li>
                      </ul>

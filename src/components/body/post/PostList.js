@@ -4,6 +4,7 @@ import axios from 'axios';
 import {API_BASE_URL, IMAGE_SERVER_BASE_URL, LIMIT, OFFSET} from "../../../config/config";
 import InfiniteScroll from 'react-infinite-scroll-component';
 import AuthContext from "../../security/AuthContext";
+import LikeButton from "./LikeButton";
 
 
 
@@ -98,9 +99,7 @@ const PostList = () => {
                         <p dangerouslySetInnerHTML={{ __html: post.contents }}></p>
                         <ul className="nav nav-stack py-3 small">
                             <li className="nav-item">
-                                <a className="nav-link active"  href="#!" >
-                                    <i className="bi bi-hand-thumbs-up-fill pe-1"></i>좋아요 (<span>{post.viewCount}</span>)
-                                </a>
+                                <LikeButton id={post.id} isPost={true} />
                             </li>
                             <li className="nav-item">
                                 <a className="nav-link" href={`/read/${post.id}`}>

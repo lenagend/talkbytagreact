@@ -51,7 +51,7 @@ const LeftSidebar = ({selectedTab, setSelectedTab }) => {
                                             </div>
                                             <div class="vr"></div>
                                             <div>
-                                                <h6 class="mb-0">0</h6>
+                                                <Link class="nav-link" to="/liked"><h6 class="mb-0">{userInfo.likeCount}</h6></Link>
                                                 <small>좋아요</small>
                                             </div>
                                         </div>

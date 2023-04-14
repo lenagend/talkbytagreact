@@ -2,6 +2,7 @@ import React, {useContext, useEffect, useState} from "react";
 import {API_BASE_URL, IMAGE_SERVER_BASE_URL, LIMIT, OFFSET} from "../../../config/config";
 import axios from "axios";
 import AuthContext from "../../security/AuthContext";
+import LikeButton from "./LikeButton";
 
 const Comment = ({ comment, setCommentCounts }) => {
     const [showReplyForm, setShowReplyForm] = useState(false);
@@ -69,7 +70,7 @@ const Comment = ({ comment, setCommentCounts }) => {
                     </div>
                     <ul className="nav nav-divider py-2 small">
                         <li className="nav-item">
-                            <a className="nav-link" href="#!"> 좋아요 (3)</a>
+                            <LikeButton id={comment.id} isPost={false} />
                         </li>
                         <li className="nav-item">
                             <a className="nav-link" href="#!" onClick={handleReplyClick}> 답글</a>

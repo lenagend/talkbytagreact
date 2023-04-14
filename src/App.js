@@ -9,6 +9,7 @@ import PrivateRoute from "./components/security/PrivateRoute";
 import SignUp from "./components/page/SignUp";
 import {AuthProvider} from "./components/security/AuthContext";
 import Settings from "./components/page/Settings";
+import Liked from "./components/page/Liked";
 
 function App() {
 
@@ -26,6 +27,9 @@ function App() {
                     </Route>
                     <Route exact path='/settings' element={<PrivateRoute originPath ="/settings"/>}>
                         <Route index element={<Settings />} />
+                    </Route>
+                    <Route exact path='/liked' element={<PrivateRoute originPath ="/liked"/>}>
+                        <Route index element={<Liked />} />
                     </Route>
                 </Routes>
             </BrowserRouter>

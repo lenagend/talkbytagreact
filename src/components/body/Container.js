@@ -12,6 +12,7 @@ import AuthContext from "../security/AuthContext";
 import SettingSideNav from "./settings/SettingSideNav";
 import AccountSettings from "./settings/AccountSettings";
 import CloseAccount from "./settings/CloseAccount";
+import LikedList from "./post/LikedList";
 
 
 const Container = ( { page, post, selectedTab, setSelectedTab} ) => {
@@ -68,6 +69,16 @@ const Container = ( { page, post, selectedTab, setSelectedTab} ) => {
                                 {selectedTab === 'closeAccount' && <CloseAccount/>}
                             </div>
                         </div>
+                    </div>
+                );
+            case 'liked':
+                return (
+                    <div className="row g-4">
+                        {isAuthenticated && <LeftSidebar />}
+                        <div className="col-md-8 col-lg-6 vstack gap-4">
+                            <LikedList />
+                        </div>
+                        <div className="col-lg-3"><RightSidebar /></div>
                     </div>
                 );
             default:
