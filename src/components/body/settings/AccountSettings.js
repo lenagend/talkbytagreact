@@ -174,10 +174,10 @@ const AccountSettings = () => {
                                 <div className="modal-body">
                                     <div>
                                         <label className="form-label">업로드 된 이미지</label>
-                                      <MyDropzone onImageupload={handleImageUpload}
-                                                  uploadedImage={uploadedImage}
-                                                  setUploadedImage={setUploadedImage}
-                                      />
+                                        <MyDropzone onImageUpload={handleImageUpload}
+                                                    uploadedImage={uploadedImage}
+                                                    setUploadedImage={setUploadedImage}
+                                        />
                                     </div>
 
                                 </div>
