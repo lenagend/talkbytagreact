@@ -113,16 +113,11 @@ function SignUpSubmit(){
                                         )}
                                     </div>
                                 </div>
-                                <div className="mb-3 text-start">
-                                    <input type="checkbox" className="form-check-input" id="keepsingnedCheck"/>
-                                        <label className="form-check-label" htmlFor="keepsingnedCheck"> 바로 로그인할래요
-                                            </label>
-                                </div>
                                 <div className="d-grid">
                                     <button type="submit" className="btn btn-lg btn-primary">회원으로 가입</button>
                                 </div>
-                                <p className="mb-0 mt-3 text-center">©2022 <a target="_blank"
-                                                                              href="https://www.webestica.com/">Webestica.</a> All
+                                <p className="mb-0 mt-3 text-center">©2023 <a target="_blank"
+                                                                              href="/">TalkByTag.</a> All
                                     rights reserved</p>
                             </form>
                         </div>

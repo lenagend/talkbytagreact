@@ -64,18 +64,13 @@ const LoginSubmit = ({originPath}) => {
                                     </div>
                                 </div>
                                 <div className="mb-3 d-sm-flex justify-content-between">
-                                    <div>
-                                        <input type="checkbox" className="form-check-input" id="rememberCheck"/>
-                                            <label className="form-check-label" htmlFor="rememberCheck">Remember
-                                                me?</label>
-                                    </div>
-                                    <a href="forgot-password.html">Forgot password?</a>
+                                    <a href="forgot-password.html">비밀번호를 잊으셨나요?</a>
                                 </div>
                                 <div className="d-grid">
                                     <button type="submit" className="btn btn-lg btn-primary">Login</button>
                                 </div>
-                                <p className="mb-0 mt-3">©2023 <a target="_blank"
-                                                                  href="https://www.webestica.com/">Webestica.</a> All
+                                <p className="mb-0 mt-3 text-center">©2023 <a target="_blank"
+                                                                              href="/">TalkByTag.</a> All
                                     rights reserved</p>
                             </form>
                         </div>
