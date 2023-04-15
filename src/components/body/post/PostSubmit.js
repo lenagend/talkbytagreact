@@ -2,7 +2,7 @@ import React, {useState, useRef, useCallback, useContext} from 'react';
 import axios from "axios";
 import {API_BASE_URL} from "../../../config/config";
 import {useNavigate} from "react-router-dom";
-import ReactQuill, { Quill } from 'react-quill';
+import ReactQuill  from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import AuthContext from "../../security/AuthContext";
 
@@ -70,6 +70,7 @@ function PostSubmit( {post} ) {
             const file = input.files[0];
             const formData = new FormData();
             formData.append('file', file);
+            formData.append('imageType', 'post'); // 하위폴더
 
             try {
                 const response = await axios.post(`${API_BASE_URL}/api/upload-image`, formData, {
@@ -79,7 +80,6 @@ function PostSubmit( {post} ) {
                 });
 
                 const data = response.data;
-                console.log(`${API_BASE_URL}${data.location}`);
                 const quill = reactQuillRef.current.getEditor();
                 const range = quill.getSelection();
                 quill.insertEmbed(range.index, 'image', `${API_BASE_URL}${data.location}`);

@@ -1,13 +1,16 @@
 import { createContext, useState, useEffect } from 'react';
 import axios from "axios";
-import {API_BASE_URL} from "../../config/config";
+import { API_BASE_URL } from "../../config/config";
 
-const AuthContext = createContext();
+const initialState = {
+    isAuthenticated: localStorage.getItem('token') ? true : false
+};
+
+const AuthContext = createContext(initialState);
 
 export const AuthProvider = ({ children }) => {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(initialState.isAuthenticated);
     const [userInfo, setUserInfo] = useState([]);
-
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -23,8 +26,6 @@ export const AuthProvider = ({ children }) => {
                 });
         }
     }, []);
-
-
 
     const login = async (username, password) => {
         try {
@@ -47,7 +48,6 @@ export const AuthProvider = ({ children }) => {
         setIsAuthenticated(false);
     };
 
-
     const fetchUserInfo = async () => {
         try {
             const token = localStorage.getItem('token');
@@ -63,7 +63,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, logout, login, userInfo, setUserInfo,  fetchUserInfo, }}>
+        <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, logout, login, userInfo, setUserInfo, fetchUserInfo }}>
             {children}
         </AuthContext.Provider>
     );
