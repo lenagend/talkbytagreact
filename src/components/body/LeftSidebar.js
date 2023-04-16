@@ -41,7 +41,7 @@ const LeftSidebar = ({selectedTab, setSelectedTab }) => {
                                         <p class="mt-3">{userInfo && userInfo.modifiedAt ? '환영합니다~!' : '아래의 설정버튼을 눌러 프로필을 만들어 보세요!'}</p>
                                         <div class="hstack gap-2 gap-xl-3 justify-content-center">
                                             <div>
-                                                <h6 class="mb-0">{userInfo.postCount}</h6>
+                                                <Link class="nav-link" to="/myPosts"> <h6 class="mb-0">{userInfo.postCount}</h6></Link>
                                                 <small>포스트</small>
                                             </div>
                                             <div class="vr"></div>

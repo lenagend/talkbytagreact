@@ -10,6 +10,7 @@ import SignUp from "./components/page/SignUp";
 import {AuthProvider} from "./components/security/AuthContext";
 import Settings from "./components/page/Settings";
 import Liked from "./components/page/Liked";
+import MyPosts from "./components/page/MyPosts";
 
 function App() {
 
@@ -30,6 +31,9 @@ function App() {
                     </Route>
                     <Route exact path='/liked' element={<PrivateRoute originPath ="/liked"/>}>
                         <Route index element={<Liked />} />
+                    </Route>
+                    <Route exact path='/myPosts' element={<PrivateRoute originPath ="/myPosts"/>}>
+                        <Route index element={<MyPosts />} />
                     </Route>
                 </Routes>
             </BrowserRouter>

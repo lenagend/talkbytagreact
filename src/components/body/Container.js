@@ -13,6 +13,8 @@ import SettingSideNav from "./settings/SettingSideNav";
 import AccountSettings from "./settings/AccountSettings";
 import CloseAccount from "./settings/CloseAccount";
 import LikedList from "./post/LikedList";
+import MyPostList from "./post/MyPostList";
+import DeletedPostList from "./post/DeletedPostList";
 
 
 const Container = ( { page, post, selectedTab, setSelectedTab} ) => {
@@ -77,6 +79,39 @@ const Container = ( { page, post, selectedTab, setSelectedTab} ) => {
                         {isAuthenticated && <LeftSidebar />}
                         <div className="col-md-8 col-lg-6 vstack gap-4">
                             <LikedList />
+                        </div>
+                        <div className="col-lg-3"><RightSidebar /></div>
+                    </div>
+                );
+            case 'myPosts':
+                return (
+                    <div className="row g-4">
+                        {isAuthenticated && <LeftSidebar />}
+                        <div className="col-md-8 col-lg-6 vstack gap-4">
+                            <ul className="nav nav-tabs nav-tabs-white border-0 mb-3" id="pills-tab" role="tablist">
+                                <li className="nav-item" role="presentation">
+                                    <button className="nav-link active" id="pills-tab-1" data-bs-toggle="pill"
+                                            data-bs-target="#pills-tab1" type="button" role="tab"
+                                            aria-controls="pills-tab1" aria-selected="true">게시된 포스트
+                                    </button>
+                                </li>
+                                <li className="nav-item" role="presentation">
+                                    <button className="nav-link" id="pills-tab-2" data-bs-toggle="pill"
+                                            data-bs-target="#pills-tab2" type="button" role="tab"
+                                            aria-controls="pills-tab2" aria-selected="false">지운 포스트
+                                    </button>
+                                </li>
+                            </ul>
+                            <div className="tab-content" id="pills-tabContent">
+                                <div className="tab-pane fade show active" id="pills-tab1" role="tabpanel"
+                                     aria-labelledby="pills-tab-1">
+                                    <MyPostList />
+                                </div>
+                                <div className="tab-pane fade" id="pills-tab2" role="tabpanel"
+                                     aria-labelledby="pills-tab-2">
+                                    <DeletedPostList />
+                                </div>
+                            </div>
                         </div>
                         <div className="col-lg-3"><RightSidebar /></div>
                     </div>
