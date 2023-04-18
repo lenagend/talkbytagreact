@@ -21,15 +21,17 @@ const LikeButton = ({ id, isPost }) => {
 
     const fetchIsLiked = () => {
         const token = localStorage.getItem('token');
-        axios.get(`${API_BASE_URL}/api/${isPost ? 'posts' : 'comments'}/${id}/liked`, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        }).then(response => {
-            setLiked(response.data);
-        }).catch(error => {
-            console.error('Error while checking liked status:', error);
-        });
+        if(token){
+            axios.get(`${API_BASE_URL}/api/${isPost ? 'posts' : 'comments'}/${id}/liked`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }).then(response => {
+                setLiked(response.data);
+            }).catch(error => {
+                console.error('Error while checking liked status:', error);
+            });
+        }
     }
 
     const fetchLikeCount = () =>
@@ -75,6 +77,7 @@ const LikeButton = ({ id, isPost }) => {
             className={`nav-link ${liked ? 'active' : ''}`}
             onClick={(e) => {
                 e.preventDefault();
+                e.stopPropagation();
                 toggleLike();
             }}
         >

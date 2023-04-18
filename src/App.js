@@ -11,6 +11,7 @@ import {AuthProvider} from "./components/security/AuthContext";
 import Settings from "./components/page/Settings";
 import Liked from "./components/page/Liked";
 import MyPosts from "./components/page/MyPosts";
+import MyComments from "./components/page/MyComments";
 
 function App() {
 
@@ -34,6 +35,9 @@ function App() {
                     </Route>
                     <Route exact path='/myPosts' element={<PrivateRoute originPath ="/myPosts"/>}>
                         <Route index element={<MyPosts />} />
+                    </Route>
+                    <Route exact path='/myComments' element={<PrivateRoute originPath ="/myComments"/>}>
+                        <Route index element={<MyComments />} />
                     </Route>
                 </Routes>
             </BrowserRouter>

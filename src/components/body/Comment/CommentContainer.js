@@ -78,13 +78,11 @@ const CommentContainer = ({postId, setCommentCounts}) => {
                     </div>
             )}
 
-            {/*Comment List*/}
             <ul className="comment-wrap list-unstyled">
                 {comments.map((comment) => (
                     <Comment key={comment.id} comment={comment} setCommentCounts={setCommentCounts}/>
                 ))}
             </ul>
-            {/*Comment List*/}
 
         </div>
     );

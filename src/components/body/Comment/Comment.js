@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from "react";
 import {API_BASE_URL, IMAGE_SERVER_BASE_URL, LIMIT, OFFSET} from "../../../config/config";
 import axios from "axios";
 import AuthContext from "../../security/AuthContext";
-import LikeButton from "./LikeButton";
+import LikeButton from "../post/LikeButton";
 
 const Comment = ({ comment, setCommentCounts }) => {
     const [showReplyForm, setShowReplyForm] = useState(false);
@@ -41,7 +41,7 @@ const Comment = ({ comment, setCommentCounts }) => {
         event.preventDefault();
         try {
             const response = await axios.post(`${API_BASE_URL}/api/comments`, { contents: contents, postId: comment.postId, upperCommentId: comment.id, username: userInfo.username });
-            console.log('Comment posted:', response.data);
+            console.log('ReadComment posted:', response.data);
             setShowReplyForm(!showReplyForm);
             setCommentCounts();
             fetchReplies();
@@ -95,13 +95,11 @@ const Comment = ({ comment, setCommentCounts }) => {
                 </form>
             </div>
             )}
-            {/*Reply List*/}
             <ul className="comment-item-nested list-unstyled">
                 {replies.map((reply) => (
                     <Comment key={reply.id} comment={reply} setCommentCounts={setCommentCounts}/>
                 ))}
             </ul>
-            {/*Reply List*/}
 
         </li>
         </div>

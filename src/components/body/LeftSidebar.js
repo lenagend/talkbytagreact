@@ -46,7 +46,7 @@ const LeftSidebar = ({selectedTab, setSelectedTab }) => {
                                             </div>
                                             <div class="vr"></div>
                                             <div>
-                                                <h6 class="mb-0">{userInfo.commentCount}</h6>
+                                                <Link class="nav-link" to="/myComments"><h6 class="mb-0">{userInfo.commentCount}</h6></Link>
                                                 <small>댓글</small>
                                             </div>
                                             <div class="vr"></div>
