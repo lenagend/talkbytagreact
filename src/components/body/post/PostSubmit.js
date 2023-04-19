@@ -8,40 +8,42 @@ import AuthContext from "../../security/AuthContext";
 
 function PostSubmit( {post} ) {
     const [contents, setContents] = useState(post?.contents || '');
-    const [hashTag, setHashTag] = useState('');
+    const [title, setTitle] = useState(post?.title || '');
     const { userInfo, fetchUserInfo } = useContext(AuthContext);
+    const [submitError, setSubmitError] = useState('');
 
     const navigate = useNavigate();
 
     const handleEditorChange = (contents) => {
         setContents(contents);
+    };
 
-        // 해시태그를 찾기 위한 정규식
-        const hashTagRegex = /(#[\wㄱ-ㅎㅏ-ㅣ가-힣]+)/g;
-
-        // 해시태그를 포함한 HTML을 텍스트로 변환
-        const parser = new DOMParser();
-        const parsedHtml = parser.parseFromString(contents, 'text/html');
-        const textContent = parsedHtml.body.textContent;
-        // 텍스트에서 해시태그를 찾음
-        const inputHashTags = textContent.match(hashTagRegex);
-
-        if (inputHashTags) {
-            // 입력한 해시태그를 공백으로 구분된 문자열로 저장
-            setHashTag(inputHashTags.join(' '));
-        } else {
-            // 해시태그가 없는 경우 hashTag를 빈 문자열로 설정
-            setHashTag('');
-        }
+    const handleTitleChange = (event) => {
+        setTitle(event.target.value);
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const updatedHashTag = hashTag || "#잡담";
+        if(!title){
+            setSubmitError('제목을 입력해주세요.');
+            window.scrollTo(0, 0);
+            setTimeout(() => {
+                setSubmitError('');
+            }, 3000);
+            return;
+        }
+        if(!contents){
+            setSubmitError('본문을 입력해주세요.');
+            window.scrollTo(0, 0);
+            setTimeout(() => {
+                setSubmitError('');
+            }, 3000);
+            return;
+        }
 
         if(!post){
-            axios.post(`${API_BASE_URL}/api/posts`, { contents: contents, hashTag : updatedHashTag, username : userInfo.username })
+            axios.post(`${API_BASE_URL}/api/posts`, { contents: contents, title : title, username : userInfo.username })
                 .then(() => {
                     fetchUserInfo();
                     navigate('/');
@@ -49,7 +51,7 @@ function PostSubmit( {post} ) {
                 .catch((err) => console.log(err));
         }else{
             const publishedValue = e.target.name === "delete" ? false : true;
-            axios.put(`${API_BASE_URL}/api/posts/${post.id}`, {contents : contents,  published: publishedValue, hashTag: updatedHashTag})
+            axios.put(`${API_BASE_URL}/api/posts/${post.id}`, {contents : contents,  published: publishedValue, title: title})
                 .then(() => {
                     fetchUserInfo();
                     navigate('/');
@@ -103,24 +105,36 @@ function PostSubmit( {post} ) {
     };
 
     return (
-            <div className="card card-body" style={{ flex: "0 0 auto" }}>
-                    <div className="d-flex mb-5">
-                        <ReactQuill style={{ width: "100%", height: "600px"}}
+        <div>
+        {submitError && (
+            <div className="alert alert-warning" role="alert">
+                <strong>제출 실패!</strong> {submitError}
+            </div>
+        )}
+            <div className="card" style={{ flex: "0 0 auto" }}>
+                <div className="card-header">
+                    <input type="text" className="form-control" value={title} onChange={handleTitleChange} />
+                </div>
+                    <div className="card-body">
+                        <ReactQuill style={{ width: "100%", height: "520px"}}
                             ref={reactQuillRef}
                             theme="snow"
                             value={contents}
                             onChange={handleEditorChange}
                             modules={modules}
-                                    placeholder="#로 시작하는 해쉬태그를 포함해 보세요! 여러개의 해쉬태그 또한 가능합니다."
                         />
                     </div>
+                <div className="card-footer mt-5">
                     <ul className="nav nav-pills nav-stack small fw-normal">
                         <li className="nav-item ms-lg-auto">
                             <button onClick={handleSubmit} className="btn btn-success-soft">{post ? '수정' : '포스트'}</button>
                             {post && (<button onClick={handleSubmit} name="delete" className="btn btn-danger-soft">삭제</button>)}
                         </li>
                     </ul>
+                </div>
+
             </div>
+        </div>
         );
 
 }

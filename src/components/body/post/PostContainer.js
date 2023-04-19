@@ -52,14 +52,14 @@ const PostContainer = ({ posts, userInfo }) => {
                             <div>
                                 <div className="nav nav-divider">
                                     <h6 className="nav-item card-title mb-0">
-                                        <a href="#!">{post.hashTag}</a>
+                                        <a href="#!">{post.title}</a>
                                     </h6>
                                     <span className="nav-item small">
-                    {new Date(post.createdAt).toLocaleString()}
-                  </span>
+                                    {post.nickname}
+                                  </span>
                                 </div>
                                 <p className="mb-0 small" style={{ textAlign: 'left' }}>
-                                    {post.nickname}
+                                    {new Date(post.createdAt).toLocaleString()}
                                 </p>
                             </div>
                         </div>

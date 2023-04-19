@@ -9,12 +9,11 @@ import PostContainer from "./PostContainer";
 
 
 
-const PostList = () => {
+const PostList = ( {sortBy} ) => {
     const [offset, setOffset] = useState(OFFSET);
     const limit = LIMIT;
     const [posts, setPosts] = useState([]);
     const [isLastPost, setIsLastPost] = useState(false);
-    const navigate = useNavigate();
     const { userInfo } = useContext(AuthContext);
 
     useEffect(() => {
@@ -23,7 +22,7 @@ const PostList = () => {
 
     const fetchPosts = async () => {
         try {
-            const response = await axios.get(`${API_BASE_URL}/api/posts?offset=${offset}&limit=${limit}`);
+            const response = await axios.get(`${API_BASE_URL}/api/posts?offset=${offset}&limit=${limit}&sortType=${sortBy}`);
             const postsData = response.data;
 
 
