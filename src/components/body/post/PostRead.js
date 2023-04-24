@@ -68,7 +68,7 @@ const PostRead = () => {
                             <div className="nav nav-divider">
                                 <h6 className="nav-item card-title mb-0">
                                     <a href="#!">
-                                    {post.hashTag}
+                                    {post.title}
                                     </a>
                                 </h6>
                                 <span className="nav-item small">{new Date(post.createdAt).toLocaleString()}</span>

@@ -51,7 +51,7 @@ const PostContainer = ({ posts, userInfo }) => {
                             </div>
                             <div>
                                 <div className="nav nav-divider">
-                                    <h6 className="nav-item card-title mb-0">
+                                    <h6 className="nav-item card-title mb-0"  style={{maxWidth : "250px"}}>
                                         <a href="#!">{post.title}</a>
                                     </h6>
                                     <span className="nav-item small">
