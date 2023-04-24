@@ -1,6 +1,6 @@
 import React, {useContext, useEffect} from 'react';
-import PostList from './post/PostList';
-import HomeSubmit from "./HomeSubmit";
+import LatestPostList from './post/LatestPostList';
+import HomeSubmit from "./home/HomeSubmit";
 import RightSidebar from "./RightSidebar";
 import PostSubmit from "./post/PostSubmit";
 import {useState} from 'react';
@@ -20,22 +20,9 @@ import MyCommentList from "./Comment/MyCommentList";
 
 const Container = ( { page, post, selectedTab, setSelectedTab} ) => {
     const { isAuthenticated } = useContext(AuthContext);
-    const [sortBy, setSortBy] = useState('createdAt');
-
 
     const renderContent = () => {
         switch (page) {
-            case 'home':
-                return (
-                    <div className="row g-4">
-                        {isAuthenticated && <LeftSidebar />}
-                        <div className="col-md-8 col-lg-6 vstack gap-4">
-                            <HomeSubmit />
-                            <PostList sortBy={sortBy}/>
-                        </div>
-                        <div className="col-lg-3"><RightSidebar /></div>
-                    </div>
-                );
             case 'submit':
                 return (
                     <div className="row g-4">

@@ -9,7 +9,7 @@ import PostContainer from "./PostContainer";
 
 
 
-const PostList = ( {sortBy} ) => {
+const HottestPostList = () => {
     const [offset, setOffset] = useState(OFFSET);
     const limit = LIMIT;
     const [posts, setPosts] = useState([]);
@@ -22,7 +22,7 @@ const PostList = ( {sortBy} ) => {
 
     const fetchPosts = async () => {
         try {
-            const response = await axios.get(`${API_BASE_URL}/api/posts?offset=${offset}&limit=${limit}&sortType=${sortBy}`);
+            const response = await axios.get(`${API_BASE_URL}/api/posts?offset=${offset}&limit=${limit}&sortType=hot`);
             const postsData = response.data;
 
 
@@ -58,4 +58,4 @@ const PostList = ( {sortBy} ) => {
     );
 };
 
-export default PostList;
+export default HottestPostList;

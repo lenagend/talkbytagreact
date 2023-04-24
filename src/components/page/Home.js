@@ -1,16 +1,15 @@
 import React from 'react';
 import Header from "../header/Header";
 import Container from "../body/Container";
+import HomeContainer from "../body/home/HomeContainer";
 
-class Home extends React.Component {
-    render() {
+const Home = ({sortType}) => {
         return (
             <div className="App">
                 <Header />
-                <Container page="home" />
+                <HomeContainer sortType={sortType}/>
             </div>
         );
-    }
 }
 
 export default Home;

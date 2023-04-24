@@ -5,29 +5,24 @@ const RightSidebar = () =>  {
                 <div className="row g-4">
                     <div className="col-sm-6 col-lg-12">
                         <div className="card">
-                            <div className="card-header pb-0 border-0">
-                                <h5 className="card-title mb-0">오늘 뜨거운</h5>
+                            <div className="card-header">
+                                <div>
+                                    <span className="badge bg-danger text-danger bg-opacity-10 small">Hot10</span>
+                                </div>
                             </div>
                             <div className="card-body">
-                                <table className="table">
-                                    <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">First</th>
-                                        <th scope="col">Last</th>
-                                        <th scope="col">Handle</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
-                                    </tr>
-
-                                    </tbody>
-                                </table>
+                                <div className="d-flex">
+                                    <h6><i className="bi bi-hand-thumbs-up-fill text-success"></i> 50</h6>
+                                    <p className="small">People have shown interest recently</p>
+                                </div>
+                                <div className="d-flex">
+                                    <h6><i className="bi bi-hand-thumbs-up-fill text-success"></i> 50</h6>
+                                    <p className="small">People have shown interest recently</p>
+                                </div>
+                                <div className="d-flex">
+                                    <h6><i className="bi bi-hand-thumbs-up-fill text-success"></i> 50</h6>
+                                    <p className="small">People have shown interest recently</p>
+                                </div>
                             </div>
                         </div>
                     </div>

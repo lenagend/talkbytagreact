@@ -19,7 +19,8 @@ function App() {
         <AuthProvider>
             <BrowserRouter>
                 <Routes>
-                    <Route path="/" element={<Home />} />
+                    <Route path="/" element={<Home sortType='latest'/>} />
+                    <Route path="/hot" element={<Home sortType='hot'/>} />
                     <Route path="/read/:id" element={<Read />} />
                     <Route path="/search/:q" element={<Search/>} />
                     <Route path="/login" element={<Login />} />

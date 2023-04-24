@@ -1,38 +1,26 @@
 import React, {useContext, useEffect, useState} from 'react';
-import { useNavigate, useParams} from 'react-router-dom';
 import axios from 'axios';
-import {API_BASE_URL, IMAGE_SERVER_BASE_URL, LIMIT, OFFSET} from "../../../config/config";
+import {API_BASE_URL, LIMIT, OFFSET} from "../../../config/config";
 import InfiniteScroll from 'react-infinite-scroll-component';
-import LikeButton from "./LikeButton";
 import AuthContext from "../../security/AuthContext";
-import LatestPostList from "./LatestPostList";
 import PostContainer from "./PostContainer";
 
-
-
-const DeletedPostList = () => {
+const LatestPostList = () => {
     const [offset, setOffset] = useState(OFFSET);
     const limit = LIMIT;
     const [posts, setPosts] = useState([]);
     const [isLastPost, setIsLastPost] = useState(false);
-    const navigate = useNavigate();
     const { userInfo } = useContext(AuthContext);
 
     useEffect(() => {
-
-        fetchPosts(false);
-
+        fetchPosts();
     }, []);
 
-    const fetchPosts = async (published) => {
+    const fetchPosts = async () => {
         try {
-            const token = localStorage.getItem('token');
-            const response = await axios.get(`${API_BASE_URL}/api/posts/my?offset=${offset}&limit=${limit}&published=${published}`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
+            const response = await axios.get(`${API_BASE_URL}/api/posts?offset=${offset}&limit=${limit}&sortType=latest`);
             const postsData = response.data;
+
 
             // 마지막 포스트 여부를 판단
             if (postsData.length < limit) {
@@ -46,20 +34,15 @@ const DeletedPostList = () => {
         }
     };
 
-
-    const handleEdit = (post) => {
-        navigate('/submit', {state : {post}});
-    }
-
     const scrollToTop = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     return (
-        <InfiniteScroll  next={fetchPosts.bind(null, false)} hasMore={!isLastPost} loader={
+        <InfiniteScroll next={fetchPosts} hasMore={!isLastPost} loader={
             <div>
                 <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                Loading
+                 Loading
             </div>
         } dataLength={posts.length} endMessage={
             <div className="alert alert-warning" role="alert">
@@ -67,8 +50,8 @@ const DeletedPostList = () => {
             </div>
         }>
             <PostContainer posts={posts} userInfo={userInfo} />
-        </InfiniteScroll>
+         </InfiniteScroll>
     );
 };
 
-export default DeletedPostList;
+export default LatestPostList;
