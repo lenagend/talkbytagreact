@@ -3,7 +3,8 @@ import axios from 'axios';
 import {API_BASE_URL, LIMIT, OFFSET} from "../../../config/config";
 import InfiniteScroll from 'react-infinite-scroll-component';
 import AuthContext from "../../security/AuthContext";
-import PostContainer from "./PostContainer";
+import InfinityScrollPostContainer from "./InfinityScrollPostContainer";
+import TablePagenationPostContainer from "./TablePaginationPostContainer";
 
 const LatestPostList = () => {
     const [offset, setOffset] = useState(OFFSET);
@@ -11,8 +12,13 @@ const LatestPostList = () => {
     const [posts, setPosts] = useState([]);
     const [isLastPost, setIsLastPost] = useState(false);
     const { userInfo } = useContext(AuthContext);
+    const [viewType, setViewType] = useState("scroll");
 
     useEffect(() => {
+        const storedViewType = localStorage.getItem("viewType");
+        if (storedViewType) {
+            setViewType(storedViewType);
+        }
         fetchPosts();
     }, []);
 
@@ -34,23 +40,14 @@ const LatestPostList = () => {
         }
     };
 
-    const scrollToTop = () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
-
     return (
-        <InfiniteScroll next={fetchPosts} hasMore={!isLastPost} loader={
-            <div>
-                <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                 Loading
-            </div>
-        } dataLength={posts.length} endMessage={
-            <div className="alert alert-warning" role="alert">
-                더 이상 게시글이 없습니다. <a href="#" onClick={scrollToTop} className="alert-link">위로 가기</a>
-            </div>
-        }>
-            <PostContainer posts={posts} userInfo={userInfo} />
-         </InfiniteScroll>
+        <div>
+            {viewType === "scroll" ? (
+                <InfinityScrollPostContainer posts={posts} userInfo={userInfo} fetchPosts={fetchPosts} isLastPost={isLastPost}/>
+            ) : (
+                <TablePagenationPostContainer posts={posts}/>
+            )}
+        </div>
     );
 };
 

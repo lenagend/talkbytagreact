@@ -3,7 +3,7 @@ import { useNavigate, useParams} from 'react-router-dom';
 import axios from 'axios';
 import {API_BASE_URL, LIMIT, OFFSET} from "../../../config/config";
 import InfiniteScroll from 'react-infinite-scroll-component';
-import PostContainer from "./PostContainer";
+import InfinityScrollPostContainer from "./InfinityScrollPostContainer";
 import AuthContext from "../../security/AuthContext";
 
 
@@ -92,7 +92,7 @@ const SearchList = () => {
                 더 이상 게시글이 없습니다. <a href="#" onClick={scrollToTop} className="alert-link">위로 가기</a>
             </div>
         }>
-            <PostContainer posts={posts} userInfo={userInfo} />
+            <InfinityScrollPostContainer posts={posts} userInfo={userInfo} />
         </InfiniteScroll>
     );
 };

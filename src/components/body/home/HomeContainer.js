@@ -4,7 +4,7 @@ import LatestPostList from "../post/LatestPostList";
 import RightSidebar from "../RightSidebar";
 import React, {useContext, useState} from "react";
 import AuthContext from "../../security/AuthContext";
-import HomePostButtonList from "./HomePostButtonList";
+import HomeButtonList from "./HomeButtonList";
 import HottestPostList from "../post/HottestPostList";
 
 const HomeContainer = ({ sortType }) => {
@@ -22,8 +22,8 @@ const HomeContainer = ({ sortType }) => {
                     {isAuthenticated && <LeftSidebar />}
                     <div className="col-md-8 col-lg-6 vstack gap-4">
                         <HomeSubmit />
-                        <HomePostButtonList sortType={sortType} onViewTypeChange={handleViewTypeChange} />
-                        {sortType === "latest" ? <LatestPostList /> : <HottestPostList />}
+                        <HomeButtonList sortType={sortType} onViewTypeChange={handleViewTypeChange} />
+                        {sortType === "latest" ? <LatestPostList viewType={viewType}/> : <HottestPostList viewType={viewType}/>}
                     </div>
                     <div className="col-lg-3">
                         <RightSidebar />

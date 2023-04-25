@@ -5,7 +5,7 @@ import {API_BASE_URL, IMAGE_SERVER_BASE_URL, LIMIT, OFFSET} from "../../../confi
 import InfiniteScroll from 'react-infinite-scroll-component';
 import LikeButton from "./LikeButton";
 import AuthContext from "../../security/AuthContext";
-import PostContainer from "./PostContainer";
+import InfinityScrollPostContainer from "./InfinityScrollPostContainer";
 
 
 
@@ -56,18 +56,7 @@ const MyPostList = () => {
 
 
     return (
-        <InfiniteScroll next={fetchPosts.bind(null, true)} hasMore={!isLastPost} loader={
-            <div>
-                <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                Loading
-            </div>
-        } dataLength={posts.length} endMessage={
-            <div className="alert alert-warning" role="alert">
-                더 이상 게시글이 없습니다. <a href="#" onClick={scrollToTop} className="alert-link">위로 가기</a>
-            </div>
-        }>
-            <PostContainer posts={posts} userInfo={userInfo} />
-        </InfiniteScroll>
+        <InfinityScrollPostContainer posts={posts} userInfo={userInfo} fetchPosts={fetchPosts} isLastPost={isLastPost}/>
     );
 };
 

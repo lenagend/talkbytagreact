@@ -4,12 +4,12 @@ import axios from 'axios';
 import {API_BASE_URL, LIMIT, OFFSET} from "../../../config/config";
 import InfiniteScroll from 'react-infinite-scroll-component';
 import AuthContext from "../../security/AuthContext";
-import Post from "./PostContainer";
-import PostContainer from "./PostContainer";
+import Post from "./InfinityScrollPostContainer";
+import InfinityScrollPostContainer from "./InfinityScrollPostContainer";
 
 
 
-const HottestPostList = () => {
+const HottestPostList = ({viewType}) => {
     const [offset, setOffset] = useState(OFFSET);
     const limit = LIMIT;
     const [posts, setPosts] = useState([]);
@@ -38,23 +38,8 @@ const HottestPostList = () => {
         }
     };
 
-    const scrollToTop = () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
-
     return (
-        <InfiniteScroll next={fetchPosts} hasMore={!isLastPost} loader={
-            <div>
-                <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                 Loading
-            </div>
-        } dataLength={posts.length} endMessage={
-            <div className="alert alert-warning" role="alert">
-                더 이상 게시글이 없습니다. <a href="#" onClick={scrollToTop} className="alert-link">위로 가기</a>
-            </div>
-        }>
-            <PostContainer posts={posts} userInfo={userInfo} />
-         </InfiniteScroll>
+        <InfinityScrollPostContainer posts={posts} userInfo={userInfo} fetchPosts={fetchPosts} isLastPost={isLastPost}/>
     );
 };
 
