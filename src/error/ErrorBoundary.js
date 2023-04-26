@@ -32,7 +32,7 @@ function ErrorRedirect() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        window.location.href="/error";
+        window.location.href="/error-404.html";
     }, [navigate]);
 
     return null;
