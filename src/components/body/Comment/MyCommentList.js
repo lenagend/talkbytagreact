@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import {API_BASE_URL, IMAGE_SERVER_BASE_URL, LIMIT, OFFSET} from "../../../config/config";
 import InfiniteScroll from 'react-infinite-scroll-component';
-import LikeButton from "../post/LikeButton";
-import AuthContext from "../../security/AuthContext";
+import LikeButton from "../Like/LikeButton";
+import AuthContext from "../../../security/AuthContext";
 import Comment from "./Comment";
 
 

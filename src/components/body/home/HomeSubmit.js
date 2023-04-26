@@ -1,6 +1,6 @@
 import React, {useContext} from "react";
 import {Link, useNavigate} from "react-router-dom";
-import AuthContext from "../../security/AuthContext";
+import AuthContext from "../../../security/AuthContext";
 import { IMAGE_SERVER_BASE_URL} from "../../../config/config";
 
 function HomeSubmit(){

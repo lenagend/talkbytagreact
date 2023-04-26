@@ -1,12 +1,9 @@
 import React, {useContext, useEffect, useState} from 'react';
-import { useNavigate, useParams} from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 import axios from 'axios';
-import {API_BASE_URL, IMAGE_SERVER_BASE_URL, LIMIT, OFFSET} from "../../../config/config";
-import InfiniteScroll from 'react-infinite-scroll-component';
-import LikeButton from "./LikeButton";
-import AuthContext from "../../security/AuthContext";
-import LatestPostList from "./LatestPostList";
-import InfinityScrollPostContainer from "./InfinityScrollPostContainer";
+import {API_BASE_URL, LIMIT, OFFSET} from "../../../config/config";
+import AuthContext from "../../../security/AuthContext";
+import InfinityScrollPostList from "./InfinityScrollPostList";
 
 
 
@@ -56,7 +53,7 @@ const DeletedPostList = () => {
     };
 
     return (
-        <InfinityScrollPostContainer posts={posts} userInfo={userInfo} fetchPosts={fetchPosts} isLastPost={isLastPost}/>
+        <InfinityScrollPostList posts={posts} userInfo={userInfo} fetchPosts={fetchPosts} isLastPost={isLastPost}/>
     );
 };
 

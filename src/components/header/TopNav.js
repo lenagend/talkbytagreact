@@ -2,7 +2,7 @@ import React, {useContext } from 'react';
 import NavSearch from "./NavSearch";
 import NavRight from "./NavRight";
 import {useNavigate} from "react-router-dom";
-import AuthContext from "../security/AuthContext";
+import AuthContext from "../../security/AuthContext";
 
 const TopNav = () =>  {
         const { isAuthenticated } = useContext(AuthContext);

@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import axios from "axios";
 import {API_BASE_URL} from "../../../config/config";
 import { useNavigate } from 'react-router-dom';
-import AuthContext from "../../security/AuthContext";
+import AuthContext from "../../../security/AuthContext";
 
 
 const LoginSubmit = ({originPath}) => {

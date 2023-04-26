@@ -1,27 +1,44 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {IMAGE_SERVER_BASE_URL} from '../../../config/config';
-import LikeButton from "./LikeButton";
+import {IMAGE_SERVER_BASE_URL, LIMIT, OFFSET} from '../../../config/config';
+import LikeButton from "../Like/LikeButton";
 import CommentButton from "../Comment/CommentButton";
 import InfiniteScroll from "react-infinite-scroll-component";
+import DisplayCreatedAt from "../../formats/DisplayCreatedAt";
+import useFetchPosts from "./useFetchPosts";
+import EditDeleteButton from "./EditDeleteButton";
 
-const InfinityScrollPostContainer = ({posts, userInfo, fetchPosts, isLastPost}) => {
+const InfinityScrollPostList = ({sortType, userInfo}) => {
+    const [offset, setOffset] = useState(OFFSET);
+    const [posts, setPosts] = useState([]);
+    const [isLastPost, fetchPosts] = useFetchPosts(sortType);
     const navigate = useNavigate();
 
+    useEffect(() => {
+        loadInitialPosts();
+    }, [sortType]);
+
+    const loadInitialPosts = async () => {
+        setOffset(OFFSET);
+        const initialPosts = await fetchPosts(OFFSET, LIMIT);
+        setPosts(initialPosts);
+    };
+
+    const loadMorePosts = async () => {
+        const newPosts = await fetchPosts(offset + LIMIT, LIMIT);
+        setPosts([...posts, ...newPosts]);
+        setOffset(offset + LIMIT);
+    };
     const handlePostClick = (postId) => {
         navigate(`/read/${postId}`, {state: {showPost: true}});
     };
-
-    const handleEdit = (post) => {
-        navigate('/submit', {state: {post}});
-    }
 
     const scrollToTop = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     return (
-        <InfiniteScroll next={fetchPosts} hasMore={!isLastPost} loader={
+        <InfiniteScroll next={loadMorePosts} hasMore={!isLastPost} loader={
             <div>
                 <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
                 Loading
@@ -74,24 +91,10 @@ const InfinityScrollPostContainer = ({posts, userInfo, fetchPosts, isLastPost}) 
                                   </span>
                                     </div>
                                     <p className="mb-0 small" style={{textAlign: 'left'}}>
-                                        {new Date(post.createdAt).toLocaleString()}
+                                        <DisplayCreatedAt createdAt={post.createdAt} />
                                     </p>
                                 </div>
                             </div>
-                            {userInfo.username === post.username && (
-                                <div>
-                                    <button
-                                        type="submit"
-                                        className="btn btn-danger-soft"
-                                        onClick={(event) => {
-                                            event.stopPropagation();
-                                            handleEdit(post);
-                                        }}
-                                    >
-                                        수정/삭제
-                                    </button>
-                                </div>
-                            )}
                         </div>
                         <div className="card-body">
                             <p dangerouslySetInnerHTML={{__html: post.contents}}></p>
@@ -102,6 +105,11 @@ const InfinityScrollPostContainer = ({posts, userInfo, fetchPosts, isLastPost}) 
                                 <li className="nav-item">
                                     <CommentButton postId={post.id} commentCount={post.commentCount}/>
                                 </li>
+                                {userInfo.username === post.username && (
+                                <li className="nav-item">
+                                   <EditDeleteButton post={post} />
+                                </li>
+                                )}
                             </ul>
                         </div>
                     </div>
@@ -111,4 +119,4 @@ const InfinityScrollPostContainer = ({posts, userInfo, fetchPosts, isLastPost}) 
     );
 };
 
-export default InfinityScrollPostContainer;
+export default InfinityScrollPostList;

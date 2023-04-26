@@ -1,10 +1,10 @@
 import React, {useState, useEffect, useContext} from 'react';
 import axios from 'axios';
 import {API_BASE_URL} from "../../../config/config";
-import AuthContext from "../../security/AuthContext";
+import AuthContext from "../../../security/AuthContext";
 import {useNavigate} from "react-router-dom";
 
-const CommentButton = ({postId, commentCount}) => {
+const CommentButton = ({postId, commentCount, displayType}) => {
     const navigate = useNavigate();
 
     const handleCommentClick = (event, postId) => { 
@@ -14,9 +14,24 @@ const CommentButton = ({postId, commentCount}) => {
     };
 
     return (
-        <a className="nav-link" href="#!" onClick={(event) => handleCommentClick(event, postId)}>
-            <i className="bi bi-chat-fill pe-1"></i>댓글 (<span>{commentCount}</span>)
-        </a>
+        <>
+            {displayType === "number" ? (
+                <a
+                    href="#!"
+                    onClick={(event) => handleCommentClick(event, postId)}
+                >
+                    <span>{commentCount}</span>
+                </a>
+            ) : (
+                <a
+                    className="nav-link"
+                    href="#!"
+                    onClick={(event) => handleCommentClick(event, postId)}
+                >
+                    <i className="bi bi-chat-fill pe-1"></i>댓글 (<span>{commentCount}</span>)
+                </a>
+            )}
+        </>
     );
 };
 

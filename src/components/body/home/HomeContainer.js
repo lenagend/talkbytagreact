@@ -1,20 +1,18 @@
 import LeftSidebar from "../LeftSidebar";
 import HomeSubmit from "./HomeSubmit";
-import LatestPostList from "../post/LatestPostList";
 import RightSidebar from "../RightSidebar";
-import React, {useContext, useState} from "react";
-import AuthContext from "../../security/AuthContext";
+import React, {useContext, useEffect, useState} from "react";
+import AuthContext from "../../../security/AuthContext";
 import HomeButtonList from "./HomeButtonList";
-import HottestPostList from "../post/HottestPostList";
+import PostContainer from "../post/PostContainer";
 
 const HomeContainer = ({ sortType }) => {
     const { isAuthenticated } = useContext(AuthContext);
-    const [viewType, setViewType] = useState("list"); // "list" 또는 "table"
+    const [viewType, setViewType] = useState(localStorage.getItem("viewType") || "scroll");
 
-    const handleViewTypeChange = (newViewType) => {
-        setViewType(newViewType);
-    };
-
+    useEffect(() => {
+        localStorage.setItem("viewType", viewType);
+    }, [viewType]);
     return (
         <main>
             <div className="container">
@@ -22,8 +20,8 @@ const HomeContainer = ({ sortType }) => {
                     {isAuthenticated && <LeftSidebar />}
                     <div className="col-md-8 col-lg-6 vstack gap-4">
                         <HomeSubmit />
-                        <HomeButtonList sortType={sortType} onViewTypeChange={handleViewTypeChange} />
-                        {sortType === "latest" ? <LatestPostList viewType={viewType}/> : <HottestPostList viewType={viewType}/>}
+                        <HomeButtonList viewType={viewType} setViewType={setViewType} sortType={sortType}/>
+                        <PostContainer sortType={sortType} viewType={viewType}/>
                     </div>
                     <div className="col-lg-3">
                         <RightSidebar />

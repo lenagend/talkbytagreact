@@ -1,10 +1,10 @@
 import React, {useState, useEffect, useContext} from 'react';
 import axios from 'axios';
 import {API_BASE_URL} from "../../../config/config";
-import AuthContext from "../../security/AuthContext";
+import AuthContext from "../../../security/AuthContext";
 import {useNavigate} from "react-router-dom";
 
-const LikeButton = ({ id, isPost }) => {
+const LikeButton = ({ id, isPost , displayType }) => {
     const [liked, setLiked] = useState(false);
     const [likeCount, setLikeCount] = useState(0);
     const { isAuthenticated, fetchUserInfo } = useContext(AuthContext);
@@ -72,6 +72,8 @@ const LikeButton = ({ id, isPost }) => {
     };
 
     return (
+        <>
+            {displayType === "number" ? (
         <a
             href="#!"
             className={`nav-link ${liked ? 'active' : ''}`}
@@ -81,9 +83,22 @@ const LikeButton = ({ id, isPost }) => {
                 toggleLike();
             }}
         >
-            <i className="bi bi-hand-thumbs-up-fill pe-1"></i>
-            좋아요 (<span>{likeCount}</span>)
-        </a>
+            <span>{likeCount}</span>
+        </a>) : (
+                <a
+                    href="#!"
+                    className={`nav-link ${liked ? 'active' : ''}`}
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        toggleLike();
+                    }}
+                >
+                    <i className="bi bi-hand-thumbs-up-fill pe-1"></i>
+                    좋아요 (<span>{likeCount}</span>)
+                </a>
+                )}
+         </>
     );
 };
 

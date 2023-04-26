@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import AuthContext from "../security/AuthContext";
+import AuthContext from "../../security/AuthContext";
 import {DEFAULT_PROFILE_IMAGE, IMAGE_SERVER_BASE_URL} from "../../config/config";
 
 const NavRight = () => {

@@ -1,8 +1,8 @@
 import React, {useContext, useEffect, useState} from "react";
 import {API_BASE_URL, IMAGE_SERVER_BASE_URL, LIMIT, OFFSET} from "../../../config/config";
 import axios from "axios";
-import AuthContext from "../../security/AuthContext";
-import LikeButton from "../post/LikeButton";
+import AuthContext from "../../../security/AuthContext";
+import LikeButton from "../Like/LikeButton";
 
 const Comment = ({ comment, setCommentCounts }) => {
     const [showReplyForm, setShowReplyForm] = useState(false);

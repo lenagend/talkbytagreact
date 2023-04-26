@@ -2,7 +2,7 @@ import React, {useState, useEffect, useContext} from 'react';
 import {API_BASE_URL, IMAGE_SERVER_BASE_URL, LIMIT, OFFSET} from "../../../config/config";
 import axios from "axios";
 import Comment from "./Comment";
-import AuthContext from "../../security/AuthContext";
+import AuthContext from "../../../security/AuthContext";
 import { useNavigate } from 'react-router-dom';
 
 

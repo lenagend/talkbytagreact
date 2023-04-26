@@ -4,7 +4,7 @@ import {API_BASE_URL} from "../../../config/config";
 import {useNavigate} from "react-router-dom";
 import ReactQuill  from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import AuthContext from "../../security/AuthContext";
+import AuthContext from "../../../security/AuthContext";
 
 function PostSubmit( {post} ) {
     const [contents, setContents] = useState(post?.contents || '');

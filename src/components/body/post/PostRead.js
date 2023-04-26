@@ -3,8 +3,8 @@ import {Link, useLocation, useNavigate, useParams} from 'react-router-dom';
 import axios from 'axios';
 import {API_BASE_URL, IMAGE_SERVER_BASE_URL} from "../../../config/config";
 import CommentContainer from "../Comment/CommentContainer";
-import AuthContext from "../../security/AuthContext";
-import LikeButton from "./LikeButton";
+import AuthContext from "../../../security/AuthContext";
+import LikeButton from "../Like/LikeButton";
 import CommentButton from "../Comment/CommentButton";
 
 

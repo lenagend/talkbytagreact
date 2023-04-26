@@ -3,66 +3,52 @@ import { useNavigate, useParams} from 'react-router-dom';
 import axios from 'axios';
 import {API_BASE_URL, IMAGE_SERVER_BASE_URL, LIMIT, OFFSET} from "../../../config/config";
 import InfiniteScroll from 'react-infinite-scroll-component';
+import LikeButton from "./LikeButton";
 import AuthContext from "../../../security/AuthContext";
+import InfinityScrollPostList from "../post/InfinityScrollPostList";
 import DisplayCreatedAt from "../../formats/DisplayCreatedAt";
-import LikeButton from "../Like/LikeButton";
 import CommentButton from "../Comment/CommentButton";
 
 
 
-const SearchList = () => {
+const LikedList = () => {
     const [offset, setOffset] = useState(OFFSET);
     const limit = LIMIT;
     const [posts, setPosts] = useState([]);
     const [isLastPost, setIsLastPost] = useState(false);
     const navigate = useNavigate();
-    const { q } = useParams();
-    const decodedSearchQuery = decodeURIComponent(q);
     const { userInfo } = useContext(AuthContext);
-    const [type, setType] = useState('title');
+
+    useEffect(() => {
+        fetchPosts();
+    }, []);
+
+    const fetchPosts = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await axios.get(`${API_BASE_URL}/api/posts/liked?offset=${offset}&limit=${limit}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            const postsData = response.data;
+            console.log(postsData);
+
+            // 마지막 포스트 여부를 판단
+            if (postsData.length < limit) {
+                setIsLastPost(true);
+            }
+
+            setPosts([...posts, ...postsData]);
+            setOffset(offset + limit);
+        } catch (error) {
+            console.error('Error fetching posts:', error);
+        }
+    };
 
     const handlePostClick = (postId) => {
         navigate(`/read/${postId}`, {state: {showPost: true}});
     };
-
-    const fetchPosts = async (newOffset) => {
-        try {
-            const encodedSearchQuery = encodeURIComponent(decodedSearchQuery);
-            const response = await axios.get(`${API_BASE_URL}/api/posts/search?type=${type}&q=${encodedSearchQuery}&offset=${newOffset}&limit=${limit}`);
-            const postsData = response.data;
-
-            // 마지막 포스트 여부를 판단
-            if (!postsData || postsData.length < limit) {
-                setIsLastPost(true);
-            } else {
-                setIsLastPost(false);
-            }
-
-            return postsData;
-
-        } catch (error) {
-            console.error('Error fetching posts:', error);
-            return [];
-        }
-    };
-
-    const loadInitialPosts = async () => {
-        setOffset(OFFSET);
-        const initialPosts = await fetchPosts(OFFSET);
-        setPosts(initialPosts);
-    };
-
-    useEffect(() => {
-        loadInitialPosts();
-    }, [q]);
-
-    const loadMorePosts = async () => {
-        const newOffset = offset + limit;
-        const morePosts = await fetchPosts(newOffset);
-        setPosts([...posts, ...morePosts]);
-        setOffset(newOffset);
-    };
-
     const handleEdit = (post) => {
         navigate('/submit', {state : {post}});
     }
@@ -73,7 +59,7 @@ const SearchList = () => {
 
 
     return (
-        <InfiniteScroll  next={loadMorePosts} hasMore={!isLastPost} loader={
+        <InfiniteScroll  next={fetchPosts} hasMore={!isLastPost} loader={
             <div>
                 <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
                 Loading
@@ -163,4 +149,4 @@ const SearchList = () => {
     );
 };
 
-export default SearchList;
+export default LikedList;

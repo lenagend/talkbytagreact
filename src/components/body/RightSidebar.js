@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import AuthContext from "../security/AuthContext";
+import AuthContext from "../../security/AuthContext";
 import axios from "axios";
 import {API_BASE_URL} from "../../config/config";
 import {Link} from "react-router-dom";
@@ -15,7 +15,6 @@ const RightSidebar = () =>  {
         try {
             const response = await axios.get(`${API_BASE_URL}/api/posts?offset=0&limit=10&sortType=hot`);
             const postsData = response.data;
-
             setPosts(postsData);
         } catch (error) {
             console.error('Error fetching posts:', error);
@@ -42,6 +41,9 @@ const RightSidebar = () =>  {
                                         </p>
                                     </div>
                                 ))}
+                                {posts.length < 1 && (
+                                    <small>오늘 작성된 글이 없습니다.</small>
+                                )}
                             </div>
                         </div>
                     </div>
