@@ -29,12 +29,10 @@ const NavRight = () => {
                                          alt="avatar" />
                                 </div>
                                 <div>
-                                    <a className="h6 stretched-link" href="#">Lori Ferguson</a>
-                                    <p className="small m-0">Web Developer</p>
+                                    <a className="h6 stretched-link" href="#">{userInfo.nickname}</a>
+                                    <p className="small m-0">{userInfo.username}</p>
                                 </div>
                             </div>
-                            <a className="dropdown-item btn btn-primary-soft btn-sm my-2 text-center"
-                               href="my-profile.html">프로필 보기</a>
                         </li>
 
                         <li className="dropdown-divider"></li>

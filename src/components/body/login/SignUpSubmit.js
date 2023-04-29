@@ -103,8 +103,13 @@ function SignUpSubmit(){
                                         )}
                                     </div>
                                 </div>
-                                <div className="mb-3 input-group-lg">
-                                    <input className="form-control" type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} placeholder="비밀번호 재입력"/>
+                                <div className="mb-3 position-relative">
+                                <div className="input-group input-group-lg">
+                                    <input className="form-control fakepassword" type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} placeholder="비밀번호 재입력"/>
+                                    <span className="input-group-text p-0">
+                                  <i className="fakepasswordicon fa-solid fa-eye-slash cursor-pointer p-2 w-40px"></i>
+                                </span>
+                                </div>
                                     <div className="d-flex mt-1">
                                         {passwordMismatchError && (
                                             <div id="pswmeter-message" className="rounded">
@@ -117,7 +122,7 @@ function SignUpSubmit(){
                                     <button type="submit" className="btn btn-lg btn-primary">회원으로 가입</button>
                                 </div>
                                 <p className="mb-0 mt-3 text-center">©2023 <a target="_blank"
-                                                                              href="/">TalkByTag.</a> All
+                                                                              href="/">김광민 포트폴리오.</a> All
                                     rights reserved</p>
                             </form>
                         </div>
