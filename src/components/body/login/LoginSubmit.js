@@ -67,10 +67,10 @@ const LoginSubmit = ({originPath}) => {
                                     <a href="forgot-password.html">비밀번호를 잊으셨나요?</a>
                                 </div>
                                 <div className="d-grid">
-                                    <button type="submit" className="btn btn-lg btn-primary">Login</button>
+                                    <button type="submit" className="btn btn-lg btn-primary">로그인</button>
                                 </div>
                                 <p className="mb-0 mt-3 text-center">©2023 <a target="_blank"
-                                                                              href="/">TalkByTag.</a> All
+                                                                              href="/">김광민 포트폴리오.</a> All
                                     rights reserved</p>
                             </form>
                         </div>

@@ -32,34 +32,22 @@ const SettingSideNav = ({ setSelectedTab }) => {
 
                             </div>
 
-                            <div class="card-footer text-center py-2">
-                                <a class="btn btn-link text-secondary btn-sm" href="#!">View Profile </a>
-                            </div>
                         </div>
                     </div>
 
                     <ul class="nav small mt-4 justify-content-center lh-1">
                         <li class="nav-item">
-                            <a class="nav-link" href="my-profile-about.html">About</a>
+                            <a class="nav-link" target="_blank" href="https://github.com/lenagend">About</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="settings.html">Settings</a>
+                            <a class="nav-link" href="/settings">설정</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" target="_blank" href="https://support.webestica.com/login">Support </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" target="_blank" href="docs/index.html">Docs </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="help.html">Help</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="privacy-and-terms.html">Privacy & terms</a>
+                            <a class="nav-link" href="mailto:119lenagend119@gmail.com">Help</a>
                         </li>
                     </ul>
 
-                    <p class="small text-center mt-1">©2023 <a class="text-body" target="_blank" href="https://www.webestica.com/"> Webestica </a></p>
+                    <p class="small text-center mt-1">©2023 <a class="text-body" target="_blank" href="https://www.webestica.com/"> 김광민 포트폴리오 </a></p>
                 </div>
             </nav>
         </div>
